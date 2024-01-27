@@ -4,6 +4,9 @@ import { Module, OnModuleInit, ValidationPipe } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { APP_PIPE } from '@nestjs/core';
 import mikroOrmConfig from '../../../persistence/mikro-orm/mikro-orm.config';
+import { ProductNestjsModule } from '../product/product.nestjs.module';
+import { LeaderboardNestjsModule } from '../leaderboard/leaderboard.nestjs.module';
+import { ProductLeaderboardNestjsModule } from '../product-leaderboard/product-leaderboard.nestjs.module';
 
 @Module({
   imports: [
@@ -13,6 +16,9 @@ import mikroOrmConfig from '../../../persistence/mikro-orm/mikro-orm.config';
     MikroOrmModule.forRootAsync({
       useFactory: mikroOrmConfig,
     }),
+    LeaderboardNestjsModule,
+    ProductNestjsModule,
+    ProductLeaderboardNestjsModule,
   ],
   providers: [
     {
