@@ -16,7 +16,7 @@ export class ProductMikroOrm implements Product {
   })
   id: string;
 
-  @PrimaryKey({
+  @Property({
     columnType: 'jsonb',
   })
   author: Author;
