@@ -46,13 +46,13 @@ export class ProductMikroOrm implements Product {
 
   @Property({
     type: DateTimeType,
-    columnType: 'timestampz',
+    columnType: 'timestamp',
   })
   createdAt: Date;
 
   @Property({
     type: DateTimeType,
-    columnType: 'timestampz',
+    columnType: 'timestamp',
   })
   updatedAt: Date;
 

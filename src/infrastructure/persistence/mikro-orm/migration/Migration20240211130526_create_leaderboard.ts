@@ -7,8 +7,8 @@ export class Migration20240211130526_create_leaderboard extends Migration {
         "id" uuid not null,
         "date" date not null,
         "link" varchar(255) not null,
-        "created_at" timestampz not null,
-        "updated_at" timestampz not null,
+        "created_at" timestamp not null,
+        "updated_at" timestamp not null,
         constraint "leaderboard_pkey" primary key ("id"));`,
     );
   }

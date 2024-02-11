@@ -7,8 +7,8 @@ export class Migration20240211130633_create_product_leaderboard extends Migratio
         "id" uuid not null,
         "product_id" uuid not null,
         "leaderboard_id" uuid not null,
-        "created_at" timestampz not null,
-        "updated_at" timestampz not null,
+        "created_at" timestamp not null,
+        "updated_at" timestamp not null,
         constraint "product_leaderboard_pkey" primary key ("id"));`,
     );
 
