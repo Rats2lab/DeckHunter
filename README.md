@@ -1,6 +1,13 @@
 ## Requisitos
 
+# Gestor de paquetes
+
+```bash
+$ npm install -g yarn
+```
+
 # Preparación del entorno
+
 ```bash
 $ cp .env.example .env.dev
 $ cp .env.example .env.test
@@ -9,83 +16,92 @@ $ cp .env.example .env.test
 Se requiere añadir valor a todas las variables contenidas en estos dos ficheros.
 
 ```bash
-$ npm i
-$ npm run build
+$ yarn install
+$ yarn build
 ```
-
 
 ## Start
 
 # Entorno local
+
 ```bash
-$ npm run docker:dev:up
+$ yarn docker:dev:up
 ```
 
 # Entorno de test
+
 ```bash
-$ npm run docker:test:up
+$ yarn docker:test:up
 ```
 
 # Ambos entornos
-```bash
-$ npm run compose:up
-```
 
+```bash
+$ yarn compose:up
+```
 
 ## Stop
 
 # Entorno local
+
 ```bash
-$ npm run docker:dev:down
+$ yarn docker:dev:down
 ```
 
 # Entorno de test
+
 ```bash
-$ npm run docker:test:down
+$ yarn docker:test:down
 ```
 
 # Ambos entornos
-```bash
-$ npm run compose:down
-```
 
+```bash
+$ yarn compose:down
+```
 
 ## Ejecución de tests
 
 # Unitarios
+
 ```bash
-$ npm run docker:test
+$ yarn docker:test
 ```
 
 # End to end
+
 ```bash
-$ npm run docker:test:e2e
+$ yarn docker:test:e2e
 ```
 
 # Externos
+
 ```bash
-$ npm run docker:test:out
+$ yarn docker:test:out
 ```
 
 # Coverage
-```bash
-$ npm run docker:test:cov
-```
 
+```bash
+$ yarn docker:test:cov
+```
 
 ## Migraciones
 
 # Crear nueva
+
 ```bash
-$ npm run migration:create MigrationName
+$ yarn migration:create MigrationName
 ```
 
 # Pendientes
+
 ```bash
-$ npm run migration:pending
+$ yarn migration:pending
 ```
 
 # Listado
+
 ```bash
-$ npm run migration:list
+$ yarn migration:list
 ```
