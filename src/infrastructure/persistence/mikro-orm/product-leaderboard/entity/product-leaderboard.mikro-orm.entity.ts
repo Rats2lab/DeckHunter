@@ -38,13 +38,13 @@ export class ProductLeaderboardMikroOrm implements ProductLeaderboard {
 
   @Property({
     type: DateTimeType,
-    columnType: 'timestampz',
+    columnType: 'timestamp',
   })
   createdAt: Date;
 
   @Property({
     type: DateTimeType,
-    columnType: 'timestampz',
+    columnType: 'timestamp',
   })
   updatedAt: Date;
 

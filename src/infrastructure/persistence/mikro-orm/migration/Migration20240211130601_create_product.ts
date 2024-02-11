@@ -11,8 +11,8 @@ export class Migration20240211130601_create_product extends Migration {
         "launch_date" date not null,
         "votes" bigint not null,
         "country" varchar(3) not null,
-        "created_at" timestampz not null,
-        "updated_at" timestampz not null,
+        "created_at" timestamp not null,
+        "updated_at" timestamp not null,
         constraint "product_pkey" primary key ("id"));`,
     );
   }
