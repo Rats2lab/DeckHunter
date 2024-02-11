@@ -6,7 +6,7 @@ import { ProductRaw } from '../../domain/product/interface/product.raw.interface
 @Injectable()
 export class ProductCreateFromJsonService {
   constructor(private readonly productCreateService: ProductCreateService) {}
-  async createFromUrl(rawProduct: ProductRaw): Promise<Product> {
+  async create(rawProduct: ProductRaw): Promise<Product> {
     return this.productCreateService.create({
       author: {
         id: rawProduct.data.post.makers[0].id,
@@ -17,7 +17,7 @@ export class ProductCreateFromJsonService {
       description: rawProduct.data.post.product.description,
       launchDate: new Date(rawProduct.data.post.featuredAt),
       votes: rawProduct.data.post.votesCount,
-      country: rawProduct.data.post.product.name, // TODO: Find alternative
+      country: 'TBD', // TODO: Find alternative
     });
   }
 }
