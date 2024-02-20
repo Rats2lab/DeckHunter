@@ -4,7 +4,7 @@ import { DocumentBuilder, OpenAPIObject, SwaggerModule } from '@nestjs/swagger';
 import { AppNestjsModule } from './app/app.nestjs.module';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppNestjsModule);
+  const app = await NestFactory.create(AppNestjsModule, { cors: true });
 
   configureSwagger(app);
 
