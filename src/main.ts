@@ -1,7 +1,7 @@
 import { INestApplication } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, OpenAPIObject, SwaggerModule } from '@nestjs/swagger';
-import { AppNestjsModule } from './app/app.nestjs.module';
+import { AppNestjsModule } from './infrastructure/framework/nestjs/app/app.nestjs.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppNestjsModule, { cors: true });
