@@ -1,8 +1,6 @@
-import { Mother } from './mother/mother';
-
 describe('Unit test', () => {
   it('Example', () => {
-    const result = Mother.randomUuid();
+    const result = 'Result';
 
     expect(result).toBeDefined();
   });

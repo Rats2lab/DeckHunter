@@ -29,7 +29,7 @@
     "docker:test:e2e": "docker exec -it test-deck-hunter-be yarn test:e2e",
     "docker:test:out": "docker exec -it test-deck-hunter-be yarn test:out",
     "docker:test:cov": "docker exec -it test-deck-hunter-be yarn test:cov",
-    "migration:create": "docker exec -it deck-hunter-be yarn mikro-orm migration:create -p src/infrastructure/persistence/mikro-orm/migration -n",
+    "migration:create": "docker exec -it deck-hunter-be yarn mikro-orm migration:create -p src/database/mikro-orm/migration -n",
     "migration:list": "docker exec -it deck-hunter-be yarn mikro-orm migration:list",
     "migration:pending": "docker exec -it deck-hunter-be yarn mikro-orm migration:pending"
   },
