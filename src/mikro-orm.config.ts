@@ -14,9 +14,13 @@ export const mikroOrmConfig = async (): Promise<MikroOrmModuleSyncOptions> => ({
     path: 'dist/src/database/mikro-orm/migration',
     snapshot: false,
     transactional: true,
+    disableForeignKeys: false,
   },
   discovery: {
     warnWhenNoEntities: true,
+  },
+  driverOptions: {
+    connection: { ssl: process.env.DB_SSL },
   },
 });
 
