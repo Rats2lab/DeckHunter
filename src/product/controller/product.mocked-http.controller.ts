@@ -47,6 +47,8 @@ export class ProductMockedHttpController {
     _dateFrom: Date,
     @Query('dateTo')
     _dateTo: Date,
+    @Query('language')
+    _language: string,
   ): Promise<ProductDto[]> {
     const foundProduct: ProductDto[] = [
       new ProductDto(new ProductMother().getRandomProduct()),
