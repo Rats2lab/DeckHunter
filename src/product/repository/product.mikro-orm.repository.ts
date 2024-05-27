@@ -6,10 +6,9 @@ import { ProductMikroOrm } from '../entity/product.mikro-orm.entity';
 import { Product } from '../interface/product.interface';
 import { ProductCreate } from '../type/product.create.type';
 import { ProductFindOneFilters } from '../type/product.find-one-filters.type';
-import { ProductRepository } from './product.repository';
 
 @Injectable()
-export class ProductMikroOrmRepository implements ProductRepository {
+export class ProductMikroOrmRepository {
   constructor(private readonly orm: MikroORM) {}
   async findOne(
     productFindOneFilters: ProductFindOneFilters,
@@ -31,7 +30,7 @@ export class ProductMikroOrmRepository implements ProductRepository {
   }
 
   @CreateRequestContext()
-  async insertOne(productCreate: ProductCreate): Promise<Product> {
+  async insert(productCreate: ProductCreate): Promise<Product> {
     const productToCreate: ProductMikroOrm = this.orm.em.create(
       ProductMikroOrm,
       {

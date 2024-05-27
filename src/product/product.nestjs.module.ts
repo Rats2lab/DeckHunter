@@ -7,7 +7,6 @@ import { ProductHttpController } from './controller/product.http.controller';
 import { ProductFindOneService } from './service/product.find-one.service';
 import { ProductFindAllService } from './service/product.find-all.service';
 import { ProductMikroOrm } from './entity/product.mikro-orm.entity';
-import { ProductRepository } from './repository/product.repository';
 import { ProductMockedHttpController } from './controller/product.mocked-http.controller';
 
 @Module({
@@ -18,10 +17,7 @@ import { ProductMockedHttpController } from './controller/product.mocked-http.co
     ProductCreateService,
     ProductFindOneService,
     ProductFindAllService,
-    {
-      provide: ProductRepository,
-      useClass: ProductMikroOrmRepository,
-    },
+    ProductMikroOrmRepository,
   ],
 })
 export class ProductNestjsModule {}

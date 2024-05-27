@@ -1,11 +1,11 @@
 import { Injectable } from '@nestjs/common';
-import { ProductRepository } from '../repository/product.repository';
 import { Product } from '../interface/product.interface';
 import { ProductFindOneFilters } from '../type/product.find-one-filters.type';
+import { ProductMikroOrmRepository } from '../repository/product.mikro-orm.repository';
 
 @Injectable()
 export class ProductFindOneService {
-  constructor(private readonly productRepository: ProductRepository) {}
+  constructor(private readonly productRepository: ProductMikroOrmRepository) {}
 
   async findOne(
     productFindOneFilters: ProductFindOneFilters,
