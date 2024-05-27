@@ -1,8 +1,8 @@
-import { Author } from '../../author/interface/author.interface';
+import { ProductAuthor } from './product-author.interface';
 
 export interface Product {
   id: string;
-  author: Author;
+  author: ProductAuthor;
   title: string;
   description: string;
   launchDate: Date;

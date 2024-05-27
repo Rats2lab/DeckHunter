@@ -1,14 +1,28 @@
-import { Author } from '../../author/interface/author.interface';
+import { ProductAuthor } from '../interface/product-author.interface';
 import { InfrastructureObject } from '../../common/infrastructure-object.type';
 import { Product } from '../interface/product.interface';
+import { ApiProperty } from '@nestjs/swagger';
 
 export class ProductDto implements InfrastructureObject<Product> {
+  @ApiProperty()
   id: string;
-  author: Author;
+
+  @ApiProperty({ type: ProductAuthor })
+  author: ProductAuthor;
+
+  @ApiProperty()
   title: string;
+
+  @ApiProperty()
   description: string;
+
+  @ApiProperty()
   launchDate: Date;
+
+  @ApiProperty()
   votes: number;
+
+  @ApiProperty()
   country: string;
 
   constructor(product: Product) {

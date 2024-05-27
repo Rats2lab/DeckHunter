@@ -6,7 +6,7 @@ import {
   PrimaryKey,
   Property,
 } from '@mikro-orm/core';
-import { Author } from '../../author/interface/author.interface';
+import { ProductAuthor } from '../interface/product-author.interface';
 import { Product } from '../interface/product.interface';
 
 @Entity({ tableName: 'product' })
@@ -19,7 +19,7 @@ export class ProductMikroOrm implements Product {
   @Property({
     columnType: 'jsonb',
   })
-  author: Author;
+  author: ProductAuthor;
 
   @Property({
     length: 100,
