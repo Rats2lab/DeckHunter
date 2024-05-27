@@ -8,10 +8,11 @@ import { ProductFindOneService } from './service/product.find-one.service';
 import { ProductFindAllService } from './service/product.find-all.service';
 import { ProductMikroOrm } from './entity/product.mikro-orm.entity';
 import { ProductRepository } from './repository/product.repository';
+import { ProductMockedHttpController } from './controller/product.mocked-http.controller';
 
 @Module({
   imports: [MikroOrmModule.forFeature([ProductMikroOrm])],
-  controllers: [ProductHttpController],
+  controllers: [ProductHttpController, ProductMockedHttpController],
   providers: [
     ProductCreateFromJsonService,
     ProductCreateService,
