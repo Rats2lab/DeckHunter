@@ -70,6 +70,8 @@ export class ProductHttpController {
     dateFrom: Date,
     @Query('dateTo')
     dateTo: Date,
+    @Query('language')
+    _language: string,
   ): Promise<ProductDto[]> {
     const foundProducts: Product[] = await this.productFindAllService.findAll();
     return foundProducts.map((product) => new ProductDto(product));
