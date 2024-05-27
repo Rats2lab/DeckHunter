@@ -9,7 +9,7 @@ import {
 } from '@nestjs/swagger';
 import { ProductDto } from '../dto/product.dto';
 import { Product } from '../interface/product.interface';
-import { ProductMother } from '../test/product.mother';
+import { ProductMother } from '../test/mother/product.mother';
 
 /**
  * @deprecated

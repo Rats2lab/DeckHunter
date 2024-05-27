@@ -1,5 +1,5 @@
-import { UtilsMother } from '../../../test/mother/utils.mother';
-import { ProductAuthor } from '../interface/product-author.interface';
+import { UtilsMother } from '../../../../test/mother/utils.mother';
+import { ProductAuthor } from '../../interface/product-author.interface';
 
 export class ProductAuthorMother {
   getRandomProductAuthor(): ProductAuthor {
