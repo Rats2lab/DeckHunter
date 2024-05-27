@@ -4,7 +4,7 @@ import { LeaderboardFindOneFilters } from '../type/leaderboard.find-one-filters.
 import { LeaderboardMikroOrmRepository } from '../repository/leaderboard.mikro-orm.repository';
 
 @Injectable()
-export class LeaderboardFindService {
+export class LeaderboardFindOneService {
   constructor(
     private readonly leaderboardRepository: LeaderboardMikroOrmRepository,
   ) {}
