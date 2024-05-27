@@ -3,16 +3,15 @@ import { Injectable } from '@nestjs/common';
 import { DateTime } from 'luxon';
 import { v4 } from 'uuid';
 import { Leaderboard } from '../interface/leaderboard.interface';
-import { LeaderboardRepository } from './leaderboard.repository';
 import { LeaderboardCreate } from '../type/leaderboard.create.type';
 import { LeaderboardMikroOrm } from '../entity/leaderboard.mikro-orm.entity';
 
 @Injectable()
-export class LeaderboardMikroOrmRepository implements LeaderboardRepository {
+export class LeaderboardMikroOrmRepository {
   constructor(private readonly orm: MikroORM) {}
 
   @CreateRequestContext()
-  async insertOne(leaderboardCreate: LeaderboardCreate): Promise<Leaderboard> {
+  async insert(leaderboardCreate: LeaderboardCreate): Promise<Leaderboard> {
     const leaderboardToCreate: LeaderboardMikroOrm = this.orm.em.create(
       LeaderboardMikroOrm,
       {

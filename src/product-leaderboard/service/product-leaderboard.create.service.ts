@@ -1,19 +1,17 @@
 import { Injectable } from '@nestjs/common';
-import { ProductLeaderboardRepository } from '../repository/product-leaderboard.repository';
 import { ProductLeaderboard } from '../interface/product-leaderboard.interface';
 import { ProductLeaderboardCreate } from '../type/product-leaderboard.create.type';
+import { ProductLeaderboardMikroOrmRepository } from '../repository/product-leaderboard.mikro-orm.repository';
 
 @Injectable()
 export class ProductLeaderboardCreateService {
   constructor(
-    private readonly productLeaderboardRepository: ProductLeaderboardRepository,
+    private readonly productLeaderboardRepository: ProductLeaderboardMikroOrmRepository,
   ) {}
 
   async create(
     productLeaderboardCreate: ProductLeaderboardCreate,
   ): Promise<ProductLeaderboard> {
-    return this.productLeaderboardRepository.insertOne(
-      productLeaderboardCreate,
-    );
+    return this.productLeaderboardRepository.insert(productLeaderboardCreate);
   }
 }

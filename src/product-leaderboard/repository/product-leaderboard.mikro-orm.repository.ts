@@ -2,19 +2,16 @@ import { CreateRequestContext, MikroORM } from '@mikro-orm/core';
 import { Injectable } from '@nestjs/common';
 import { DateTime } from 'luxon';
 import { v4 } from 'uuid';
-import { ProductLeaderboard } from '../interface/product-leaderboard.interface';
-import { ProductLeaderboardRepository } from './product-leaderboard.repository';
-import { ProductLeaderboardCreate } from '../type/product-leaderboard.create.type';
 import { ProductLeaderboardMikroOrm } from '../entity/product-leaderboard.mikro-orm.entity';
+import { ProductLeaderboard } from '../interface/product-leaderboard.interface';
+import { ProductLeaderboardCreate } from '../type/product-leaderboard.create.type';
 
 @Injectable()
-export class ProductLeaderboardMikroOrmRepository
-  implements ProductLeaderboardRepository
-{
+export class ProductLeaderboardMikroOrmRepository {
   constructor(private readonly orm: MikroORM) {}
 
   @CreateRequestContext()
-  async insertOne(
+  async insert(
     productLeaderboardCreate: ProductLeaderboardCreate,
   ): Promise<ProductLeaderboard> {
     const productLeaderboardToCreate: ProductLeaderboardMikroOrm =
