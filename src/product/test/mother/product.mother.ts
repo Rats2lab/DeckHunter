@@ -1,5 +1,5 @@
-import { UtilsMother } from '../../../test/mother/utils.mother';
-import { Product } from '../interface/product.interface';
+import { UtilsMother } from '../../../../test/mother/utils.mother';
+import { Product } from '../../interface/product.interface';
 import { ProductAuthorMother } from './product.author.mother';
 
 export class ProductMother {

@@ -4,6 +4,7 @@ import { LeaderboardMikroOrm } from './entity/leaderboard.mikro-orm.entity';
 import { LeaderboardMikroOrmRepository } from './repository/leaderboard.mikro-orm.repository';
 import { LeaderboardRepository } from './repository/leaderboard.repository';
 import { LeaderboardCreateService } from './service/leaderboard.create.service';
+import { LeaderboardMockedHttpController } from './controller/leaderboard.mocked-http.controller';
 
 @Module({
   imports: [MikroOrmModule.forFeature([LeaderboardMikroOrm])],
@@ -14,5 +15,6 @@ import { LeaderboardCreateService } from './service/leaderboard.create.service';
       useClass: LeaderboardMikroOrmRepository,
     },
   ],
+  controllers: [LeaderboardMockedHttpController],
 })
 export class LeaderboardNestjsModule {}
