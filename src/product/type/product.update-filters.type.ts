@@ -1,3 +1,3 @@
-import { ProductFindOneFilters } from './product.find-one-filters.type';
+import { Product } from '../interface/product.interface';
 
-export type ProductUpdateFilters = ProductFindOneFilters;
+export type ProductUpdateFilters = Pick<Product, 'id'>;

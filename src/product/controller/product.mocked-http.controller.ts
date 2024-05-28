@@ -28,7 +28,11 @@ export class ProductMockedHttpController {
     description: 'Product not found',
   })
   @Get(':id')
-  async findOne(@Param('id', ParseUUIDPipe) id: string): Promise<ProductDto> {
+  async findOne(
+    @Param('id', ParseUUIDPipe) id: string,
+    @Query('language')
+    language: string,
+  ): Promise<ProductDto> {
     const foundProduct: Product = new ProductMother().getRandomProduct();
     return new ProductDto(foundProduct);
   }
