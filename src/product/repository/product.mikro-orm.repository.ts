@@ -1,4 +1,8 @@
-import { CreateRequestContext, MikroORM } from '@mikro-orm/core';
+import {
+  CreateRequestContext,
+  EntityComparator,
+  MikroORM,
+} from '@mikro-orm/core';
 import { Injectable } from '@nestjs/common';
 import { DateTime } from 'luxon';
 import { v4 } from 'uuid';
@@ -6,20 +10,25 @@ import { ProductMikroOrm } from '../entity/product.mikro-orm.entity';
 import { Product } from '../interface/product.interface';
 import { ProductCreate } from '../type/product.create.type';
 import { ProductFindOneFilters } from '../type/product.find-one-filters.type';
+import { ProductUpdateFields } from '../type/product.update-fields.type';
+import { ProductUpdateFilters } from '../type/product.update-filters.type';
 
 @Injectable()
 export class ProductMikroOrmRepository {
   constructor(private readonly orm: MikroORM) {}
+
+  @CreateRequestContext()
   async findOne(
     productFindOneFilters: ProductFindOneFilters,
-  ): Promise<Product> {
-    const foundProduct: ProductMikroOrm = await this.orm.em.findOneOrFail(
+  ): Promise<Product | undefined> {
+    const foundProduct: ProductMikroOrm | null = await this.orm.em.findOne(
       ProductMikroOrm,
       productFindOneFilters,
     );
 
-    return foundProduct.toDomain();
+    return foundProduct ? foundProduct.toDomain() : undefined;
   }
+  @CreateRequestContext()
   async findAll(): Promise<Product[]> {
     const foundProducts: ProductMikroOrm[] = await this.orm.em.find(
       ProductMikroOrm,
@@ -44,5 +53,38 @@ export class ProductMikroOrmRepository {
     await this.orm.em.persistAndFlush(productToCreate);
 
     return productToCreate.toDomain();
+  }
+
+  @CreateRequestContext()
+  async update(
+    productUpdateFilters: ProductUpdateFilters,
+    productUpdateFields: ProductUpdateFields,
+  ): Promise<Product | undefined> {
+    const existingProduct: ProductMikroOrm | null = await this.orm.em.findOne(
+      ProductMikroOrm,
+      productUpdateFilters,
+    );
+
+    if (!existingProduct) {
+      return;
+    }
+
+    const entityComparator: EntityComparator = this.orm.em.getComparator();
+
+    const entityWithoutChanges: boolean = entityComparator.matching(
+      ProductMikroOrm.name,
+      existingProduct,
+      { ...existingProduct, ...productUpdateFields },
+    );
+
+    if (entityWithoutChanges) {
+      return existingProduct.toDomain();
+    }
+
+    this.orm.em.assign(existingProduct, productUpdateFields);
+
+    this.orm.em.flush();
+
+    return existingProduct.toDomain();
   }
 }

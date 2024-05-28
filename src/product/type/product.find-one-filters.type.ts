@@ -1,3 +1,5 @@
 import { Product } from '../interface/product.interface';
 
-export type ProductFindOneFilters = Pick<Product, 'id'>;
+export type ProductFindOneFilters = Pick<Product, 'id'> & {
+  language: string;
+};

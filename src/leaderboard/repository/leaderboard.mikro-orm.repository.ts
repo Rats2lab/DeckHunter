@@ -1,13 +1,17 @@
-import { CreateRequestContext, MikroORM } from '@mikro-orm/core';
-import { Injectable, MethodNotAllowedException } from '@nestjs/common';
+import {
+  CreateRequestContext,
+  EntityComparator,
+  MikroORM,
+} from '@mikro-orm/core';
+import { Injectable } from '@nestjs/common';
 import { DateTime } from 'luxon';
 import { v4 } from 'uuid';
+import { LeaderboardMikroOrm } from '../entity/leaderboard.mikro-orm.entity';
 import { Leaderboard } from '../interface/leaderboard.interface';
 import { LeaderboardCreate } from '../type/leaderboard.create.type';
-import { LeaderboardMikroOrm } from '../entity/leaderboard.mikro-orm.entity';
+import { LeaderboardFindOneFilters } from '../type/leaderboard.find-one-filters.type';
 import { LeaderboardUpdateFields } from '../type/leaderboard.update-fields.type';
 import { LeaderboardUpdateFilters } from '../type/leaderboard.update-filters.type';
-import { LeaderboardFindOneFilters } from '../type/leaderboard.find-one-filters.type';
 
 @Injectable()
 export class LeaderboardMikroOrmRepository {
@@ -44,7 +48,30 @@ export class LeaderboardMikroOrmRepository {
   async update(
     leaderboardUpdateFilters: LeaderboardUpdateFilters,
     leaderboardUpdateFields: LeaderboardUpdateFields,
-  ): Promise<Leaderboard> {
-    throw new MethodNotAllowedException('Method not implemented');
+  ): Promise<Leaderboard | undefined> {
+    const existingLeaderboard: LeaderboardMikroOrm | null =
+      await this.orm.em.findOne(LeaderboardMikroOrm, leaderboardUpdateFilters);
+
+    if (!existingLeaderboard) {
+      return;
+    }
+
+    const entityComparator: EntityComparator = this.orm.em.getComparator();
+
+    const entityWithoutChanges: boolean = entityComparator.matching(
+      LeaderboardMikroOrm.name,
+      existingLeaderboard,
+      { ...existingLeaderboard, ...leaderboardUpdateFields },
+    );
+
+    if (entityWithoutChanges) {
+      return existingLeaderboard.toDomain();
+    }
+
+    this.orm.em.assign(existingLeaderboard, leaderboardUpdateFields);
+
+    this.orm.em.flush();
+
+    return existingLeaderboard.toDomain();
   }
 }

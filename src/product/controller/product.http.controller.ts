@@ -4,40 +4,55 @@ import {
   Get,
   Param,
   ParseUUIDPipe,
+  Patch,
   Post,
   Query,
 } from '@nestjs/common';
 import {
   ApiBadRequestResponse,
   ApiBearerAuth,
+  ApiBody,
+  ApiCreatedResponse,
   ApiForbiddenResponse,
   ApiNotFoundResponse,
   ApiOkResponse,
   ApiTags,
 } from '@nestjs/swagger';
+import { ProductCreateDto } from '../dto/product.create.dto';
 import { ProductDto } from '../dto/product.dto';
+import { ProductUpdateFieldsDto } from '../dto/product.update-fields.dto';
 import { Product } from '../interface/product.interface';
-import { ProductRaw } from '../interface/product.raw.interface';
-import { ProductCreateFromJsonService } from '../service/product.create-from-json.service';
+import { ProductCreateService } from '../service/product.create.service';
 import { ProductFindAllService } from '../service/product.find-all.service';
 import { ProductFindOneService } from '../service/product.find-one.service';
+import { ProductUpdateService } from '../service/product.update.service';
 
-@ApiBearerAuth()
+//@ApiBearerAuth()
 @ApiForbiddenResponse({ description: 'Authorization is required' })
 @ApiBadRequestResponse({ description: 'Bad request' })
 @ApiTags('Product')
 @Controller({ path: 'product', version: '1' })
 export class ProductHttpController {
   constructor(
-    private readonly productCreateFromJsonService: ProductCreateFromJsonService,
+    private readonly productCreateService: ProductCreateService,
     private readonly productFindOneService: ProductFindOneService,
     private readonly productFindAllService: ProductFindAllService,
+    private readonly productUpdateService: ProductUpdateService,
   ) {}
 
+  @ApiCreatedResponse({
+    description: 'Product created',
+    type: ProductDto,
+  })
+  @ApiBody({ type: ProductCreateDto })
   @Post()
-  async create(@Body() rawProduct: ProductRaw): Promise<ProductDto> {
-    const createdProduct: Product =
-      await this.productCreateFromJsonService.create(rawProduct);
+  async create(
+    @Body() productCreateDto: ProductCreateDto,
+  ): Promise<ProductDto> {
+    const createdProduct: Product = await this.productCreateService.create(
+      productCreateDto.toDomain(),
+    );
+
     return new ProductDto(createdProduct);
   }
 
@@ -49,9 +64,14 @@ export class ProductHttpController {
     description: 'Product not found',
   })
   @Get(':id')
-  async find(@Param('id', ParseUUIDPipe) id: string): Promise<ProductDto> {
+  async find(
+    @Param('id', ParseUUIDPipe) id: string,
+    @Query('language')
+    language: string,
+  ): Promise<ProductDto> {
     const foundProduct: Product = await this.productFindOneService.findOne({
       id,
+      language,
     });
     return new ProductDto(foundProduct);
   }
@@ -75,5 +95,22 @@ export class ProductHttpController {
   ): Promise<ProductDto[]> {
     const foundProducts: Product[] = await this.productFindAllService.findAll();
     return foundProducts.map((product) => new ProductDto(product));
+  }
+
+  @ApiOkResponse({
+    description: 'Product updated',
+    type: ProductDto,
+  })
+  @Patch(':id')
+  async update(
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() productUpdateFields: ProductUpdateFieldsDto,
+  ): Promise<ProductDto> {
+    const updatedProduct: Product = await this.productUpdateService.update(
+      { id },
+      productUpdateFields.toDomain(),
+    );
+
+    return new ProductDto(updatedProduct);
   }
 }
