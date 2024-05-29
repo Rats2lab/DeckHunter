@@ -26,6 +26,7 @@ import { ProductCreateService } from '../service/product.create.service';
 import { ProductFindAllService } from '../service/product.find-all.service';
 import { ProductFindOneService } from '../service/product.find-one.service';
 import { ProductUpdateService } from '../service/product.update.service';
+import { ProductWithLeaderboards } from '../interface/product.with-leaderboards.interface';
 
 //@ApiBearerAuth()
 @ApiForbiddenResponse({ description: 'Authorization is required' })
@@ -69,10 +70,11 @@ export class ProductHttpController {
     @Query('language')
     language: string,
   ): Promise<ProductDto> {
-    const foundProduct: Product = await this.productFindOneService.findOne({
-      id,
-      language,
-    });
+    const foundProduct: ProductWithLeaderboards =
+      await this.productFindOneService.findOne({
+        id,
+        language,
+      });
     return new ProductDto(foundProduct);
   }
 
@@ -93,7 +95,8 @@ export class ProductHttpController {
     @Query('language')
     _language: string,
   ): Promise<ProductDto[]> {
-    const foundProducts: Product[] = await this.productFindAllService.findAll();
+    const foundProducts: ProductWithLeaderboards[] =
+      await this.productFindAllService.findAll();
     return foundProducts.map((product) => new ProductDto(product));
   }
 

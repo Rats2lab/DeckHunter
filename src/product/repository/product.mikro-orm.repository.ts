@@ -7,11 +7,12 @@ import { Injectable } from '@nestjs/common';
 import { DateTime } from 'luxon';
 import { v4 } from 'uuid';
 import { ProductMikroOrm } from '../entity/product.mikro-orm.entity';
-import { Product } from '../interface/product.interface';
+import { ProductWithLeaderboards } from '../interface/product.with-leaderboards.interface';
 import { ProductCreate } from '../type/product.create.type';
 import { ProductFindOneFilters } from '../type/product.find-one-filters.type';
 import { ProductUpdateFields } from '../type/product.update-fields.type';
 import { ProductUpdateFilters } from '../type/product.update-filters.type';
+import { Product } from '../interface/product.interface';
 
 @Injectable()
 export class ProductMikroOrmRepository {
@@ -20,19 +21,21 @@ export class ProductMikroOrmRepository {
   @CreateRequestContext()
   async findOne(
     productFindOneFilters: ProductFindOneFilters,
-  ): Promise<Product | undefined> {
+  ): Promise<ProductWithLeaderboards | undefined> {
     const foundProduct: ProductMikroOrm | null = await this.orm.em.findOne(
       ProductMikroOrm,
       productFindOneFilters,
+      { populate: ['leaderboards'] },
     );
 
     return foundProduct ? foundProduct.toDomain() : undefined;
   }
   @CreateRequestContext()
-  async findAll(): Promise<Product[]> {
+  async findAll(): Promise<ProductWithLeaderboards[]> {
     const foundProducts: ProductMikroOrm[] = await this.orm.em.find(
       ProductMikroOrm,
       {},
+      { populate: ['leaderboards'] },
     );
 
     return foundProducts.map((product) => product.toDomain());
