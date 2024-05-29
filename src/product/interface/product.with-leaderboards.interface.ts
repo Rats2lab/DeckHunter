@@ -1,7 +1,7 @@
 import { Leaderboard } from '../../leaderboard/interface/leaderboard.interface';
 import { ProductAuthor } from './product-author.interface';
 
-export interface Product {
+export interface ProductWithLeaderboards {
   id: string;
   author: ProductAuthor;
   title: string;
@@ -9,4 +9,5 @@ export interface Product {
   launchDate: Date;
   votes: number;
   country: string;
+  leaderboards: Leaderboard[];
 }

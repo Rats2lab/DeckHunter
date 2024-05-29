@@ -1,13 +1,18 @@
 import {
   BigIntType,
+  Collection,
   DateTimeType,
   DateType,
   Entity,
+  ManyToMany,
   PrimaryKey,
   Property,
 } from '@mikro-orm/core';
 import { ProductAuthor } from '../interface/product-author.interface';
 import { Product } from '../interface/product.interface';
+import { LeaderboardMikroOrm } from '../../leaderboard/entity/leaderboard.mikro-orm.entity';
+import { ProductLeaderboardMikroOrm } from '../../product-leaderboard/entity/product-leaderboard.mikro-orm.entity';
+import { ProductWithLeaderboards } from '../interface/product.with-leaderboards.interface';
 
 @Entity({ tableName: 'product' })
 export class ProductMikroOrm implements Product {
@@ -44,6 +49,17 @@ export class ProductMikroOrm implements Product {
   @Property({ length: 3 })
   country: string;
 
+  @ManyToMany({
+    entity: () => LeaderboardMikroOrm,
+    owner: true,
+    nullable: true,
+    pivotEntity: () => ProductLeaderboardMikroOrm,
+    joinColumn: 'product_id',
+    inverseJoinColumn: 'leaderboard_id',
+    cascade: [],
+  })
+  leaderboards: Collection<LeaderboardMikroOrm>;
+
   @Property({
     type: DateTimeType,
     columnType: 'timestamp',
@@ -57,7 +73,7 @@ export class ProductMikroOrm implements Product {
   updatedAt: Date;
 
   @Property({ persist: false, hidden: true })
-  toDomain(): Product {
+  toDomain(): ProductWithLeaderboards {
     return {
       id: this.id,
       author: this.author,
@@ -66,6 +82,9 @@ export class ProductMikroOrm implements Product {
       launchDate: this.launchDate,
       votes: this.votes,
       country: this.country,
+      leaderboards: this.leaderboards.isInitialized()
+        ? this.leaderboards.getItems()
+        : [],
     };
   }
 }

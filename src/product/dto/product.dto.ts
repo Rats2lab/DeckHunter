@@ -1,9 +1,13 @@
-import { ProductAuthor } from '../interface/product-author.interface';
-import { InfrastructureObject } from '../../common/infrastructure-object.type';
-import { Product } from '../interface/product.interface';
 import { ApiProperty } from '@nestjs/swagger';
+import { InfrastructureObject } from '../../common/infrastructure-object.type';
+import { LeaderboardDto } from '../../leaderboard/dto/leaderboard.dto';
+import { ProductAuthor } from '../interface/product-author.interface';
+import { ProductWithLeaderboards } from '../interface/product.with-leaderboards.interface';
+import { Product } from '../interface/product.interface';
 
-export class ProductDto implements InfrastructureObject<Product> {
+export class ProductDto
+  implements InfrastructureObject<ProductWithLeaderboards>
+{
   @ApiProperty()
   id: string;
 
@@ -25,11 +29,14 @@ export class ProductDto implements InfrastructureObject<Product> {
   @ApiProperty()
   country: string;
 
+  @ApiProperty({ type: LeaderboardDto, isArray: true })
+  leaderboards: LeaderboardDto[];
+
   constructor(product: Product) {
     Object.assign(this, product);
   }
 
-  toDomain(): Product {
+  toDomain(): ProductWithLeaderboards {
     return {
       id: this.id,
       author: this.author,
@@ -38,6 +45,7 @@ export class ProductDto implements InfrastructureObject<Product> {
       launchDate: this.launchDate,
       votes: this.votes,
       country: this.country,
+      leaderboards: this.leaderboards,
     };
   }
 }
