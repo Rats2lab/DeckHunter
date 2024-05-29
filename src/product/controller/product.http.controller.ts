@@ -89,9 +89,12 @@ export class ProductHttpController {
   async findAll(
     @Query('language')
     _language: string,
+    @Query('leaderboardId')
+    leaderboardId: string,
   ): Promise<ProductDto[]> {
     const foundProducts: ProductWithLeaderboards[] =
-      await this.productFindAllService.findAll();
+      await this.productFindAllService.findAll({ leaderboardId });
+
     return foundProducts.map((product) => new ProductDto(product));
   }
 
