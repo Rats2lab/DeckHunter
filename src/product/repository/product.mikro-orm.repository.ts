@@ -13,6 +13,7 @@ import { ProductFindOneFilters } from '../type/product.find-one-filters.type';
 import { ProductUpdateFields } from '../type/product.update-fields.type';
 import { ProductUpdateFilters } from '../type/product.update-filters.type';
 import { Product } from '../interface/product.interface';
+import { ProductFindFilters } from '../type/product.find-filters.type';
 
 @Injectable()
 export class ProductMikroOrmRepository {
@@ -31,12 +32,25 @@ export class ProductMikroOrmRepository {
     return foundProduct ? foundProduct.toDomain() : undefined;
   }
   @CreateRequestContext()
-  async findAll(): Promise<ProductWithLeaderboards[]> {
+  async findAll(
+    productFindFilters: ProductFindFilters,
+  ): Promise<ProductWithLeaderboards[]> {
     const foundProducts: ProductMikroOrm[] = await this.orm.em.find(
       ProductMikroOrm,
       {},
       { populate: ['leaderboards'] },
     );
+
+    // TODO: Improve
+    if (productFindFilters.leaderboardId) {
+      return foundProducts
+        .map((product) => product.toDomain())
+        .filter((product) =>
+          product.leaderboards
+            .map((leaderboard) => leaderboard.id)
+            .includes(productFindFilters.leaderboardId),
+        );
+    }
 
     return foundProducts.map((product) => product.toDomain());
   }

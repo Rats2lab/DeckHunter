@@ -1,4 +1,3 @@
 export type ProductFindFilters = {
-  dateFrom?: Date;
-  dateTo?: Date;
+  leaderboardId?: string;
 };
