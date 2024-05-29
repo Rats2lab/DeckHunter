@@ -7,17 +7,12 @@ import { ProductHttpController } from './controller/product.http.controller';
 import { ProductFindOneService } from './service/product.find-one.service';
 import { ProductFindAllService } from './service/product.find-all.service';
 import { ProductMikroOrm } from './entity/product.mikro-orm.entity';
-import { ProductMockedHttpController } from './controller/product.mocked-http.controller';
 import { ProductRawHttpController } from './controller/product.raw.http.controller';
 import { ProductUpdateService } from './service/product.update.service';
 
 @Module({
   imports: [MikroOrmModule.forFeature([ProductMikroOrm])],
-  controllers: [
-    ProductHttpController,
-    ProductMockedHttpController,
-    ProductRawHttpController,
-  ],
+  controllers: [ProductHttpController, ProductRawHttpController],
   providers: [
     ProductCreateFromJsonService,
     ProductCreateService,
