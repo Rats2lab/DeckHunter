@@ -10,10 +10,12 @@ import {
 } from '@nestjs/common';
 import {
   ApiBadRequestResponse,
+  ApiBody,
   ApiCreatedResponse,
   ApiForbiddenResponse,
   ApiNotFoundResponse,
   ApiOkResponse,
+  ApiQuery,
   ApiTags,
 } from '@nestjs/swagger';
 import { LeaderboardCreateDto } from '../dto/leaderboard.create.dto';
@@ -62,10 +64,10 @@ export class LeaderboardHttpController {
     description: 'Leaderboard not found',
   })
   @Get()
-  async findOneByDate(@Query('date') date: Date): Promise<LeaderboardDto> {
+  async findOneByDate(@Query('date') date: string): Promise<LeaderboardDto> {
     const foundLeaderboard: Leaderboard =
       await this.leaderboardFindService.findOne({
-        date,
+        date: new Date(date),
       });
 
     return new LeaderboardDto(foundLeaderboard);
@@ -75,6 +77,7 @@ export class LeaderboardHttpController {
     description: 'Leaderboard created',
     type: LeaderboardDto,
   })
+  @ApiBody({ type: LeaderboardCreateDto })
   @Post()
   async create(
     @Body() createLeaderboard: LeaderboardCreateDto,

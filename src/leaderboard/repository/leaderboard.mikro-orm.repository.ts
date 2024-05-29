@@ -39,7 +39,7 @@ export class LeaderboardMikroOrmRepository {
       },
     );
 
-    await this.orm.em.persistAndFlush(leaderboardCreate);
+    await this.orm.em.persistAndFlush(leaderboardToCreate);
 
     return leaderboardToCreate.toDomain();
   }

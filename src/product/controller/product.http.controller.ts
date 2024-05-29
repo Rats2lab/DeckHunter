@@ -73,7 +73,6 @@ export class ProductHttpController {
     const foundProduct: ProductWithLeaderboards =
       await this.productFindOneService.findOne({
         id,
-        language,
       });
     return new ProductDto(foundProduct);
   }
@@ -88,10 +87,6 @@ export class ProductHttpController {
   })
   @Get()
   async findAll(
-    @Query('dateFrom')
-    dateFrom: Date,
-    @Query('dateTo')
-    dateTo: Date,
     @Query('language')
     _language: string,
   ): Promise<ProductDto[]> {
