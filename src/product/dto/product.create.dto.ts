@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { InfrastructureObject } from '../../common/infrastructure-object.type';
+import { InfrastructureObject } from '../../common/infrastructure.object.type';
 import { ProductAuthor } from '../interface/product-author.interface';
 import { ProductCreate } from '../type/product.create.type';
 

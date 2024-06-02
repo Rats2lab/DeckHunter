@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { Leaderboard } from '../interface/leaderboard.interface';
-import { LeaderboardFindOneFilters } from '../type/leaderboard.find-one-filters.type';
 import { LeaderboardMikroOrmRepository } from '../repository/leaderboard.mikro-orm.repository';
+import { LeaderboardFindOneFilters } from '../type/leaderboard.find-one-filters.type';
 
 @Injectable()
 export class LeaderboardFindOneService {

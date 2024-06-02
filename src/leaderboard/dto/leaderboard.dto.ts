@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { InfrastructureObject } from '../../common/infrastructure-object.type';
+import { InfrastructureObject } from '../../common/infrastructure.object.type';
 import { Leaderboard } from '../interface/leaderboard.interface';
 
 export class LeaderboardDto implements InfrastructureObject<Leaderboard> {

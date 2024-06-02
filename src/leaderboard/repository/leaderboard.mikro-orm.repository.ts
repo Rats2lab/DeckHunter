@@ -9,9 +9,10 @@ import { v4 } from 'uuid';
 import { LeaderboardMikroOrm } from '../entity/leaderboard.mikro-orm.entity';
 import { Leaderboard } from '../interface/leaderboard.interface';
 import { LeaderboardCreate } from '../type/leaderboard.create.type';
-import { LeaderboardFindOneFilters } from '../type/leaderboard.find-one-filters.type';
+import { LeaderboardFindFilters } from '../type/leaderboard.find-filters.type';
 import { LeaderboardUpdateFields } from '../type/leaderboard.update-fields.type';
 import { LeaderboardUpdateFilters } from '../type/leaderboard.update-filters.type';
+import { LeaderboardFindOneFilters } from '../type/leaderboard.find-one-filters.type';
 
 @Injectable()
 export class LeaderboardMikroOrmRepository {
@@ -25,6 +26,24 @@ export class LeaderboardMikroOrmRepository {
       await this.orm.em.findOne(LeaderboardMikroOrm, leaderboardFindOneFilters);
 
     return foundLeaderboard ? foundLeaderboard.toDomain() : undefined;
+  }
+
+  @CreateRequestContext()
+  async find(
+    leaderboardFindFilters: LeaderboardFindFilters,
+  ): Promise<Leaderboard[]> {
+    const foundLeaderboard: LeaderboardMikroOrm[] = await this.orm.em.find(
+      LeaderboardMikroOrm,
+      {},
+      {
+        offset: leaderboardFindFilters.offset,
+        limit: leaderboardFindFilters.limit,
+      },
+    );
+
+    return foundLeaderboard.length
+      ? foundLeaderboard.map((leaderboard) => leaderboard.toDomain())
+      : [];
   }
 
   @CreateRequestContext()

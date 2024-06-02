@@ -38,7 +38,11 @@ export class ProductMikroOrmRepository {
     const foundProducts: ProductMikroOrm[] = await this.orm.em.find(
       ProductMikroOrm,
       {},
-      { populate: ['leaderboards'] },
+      {
+        populate: ['leaderboards'],
+        offset: productFindFilters.offset,
+        limit: productFindFilters.limit,
+      },
     );
 
     // TODO: Improve

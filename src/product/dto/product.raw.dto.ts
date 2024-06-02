@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { InfrastructureObject } from '../../common/infrastructure-object.type';
+import { InfrastructureObject } from '../../common/infrastructure.object.type';
 import { ProductRaw } from '../interface/product.raw.interface';
 
 export class ProductRawDto implements InfrastructureObject<ProductRaw> {

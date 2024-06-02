@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { InfrastructureObject } from '../../common/infrastructure-object.type';
+import { InfrastructureObject } from '../../common/infrastructure.object.type';
 import { ProductUpdateFields } from '../type/product.update-fields.type';
 
 export class ProductUpdateFieldsDto
