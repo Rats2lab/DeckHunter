@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { InfrastructureObject } from '../../common/infrastructure-object.type';
+import { InfrastructureObject } from '../../common/infrastructure.object.type';
 import { LeaderboardDto } from '../../leaderboard/dto/leaderboard.dto';
 import { ProductAuthor } from '../interface/product-author.interface';
 import { ProductWithLeaderboards } from '../interface/product.with-leaderboards.interface';

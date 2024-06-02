@@ -25,6 +25,9 @@ import { Leaderboard } from '../interface/leaderboard.interface';
 import { LeaderboardCreateService } from '../service/leaderboard.create.service';
 import { LeaderboardFindOneService } from '../service/leaderboard.find-one.service';
 import { LeaderboardUpdateService } from '../service/leaderboard.update.service';
+import { LeaderboardFindFiltersDto } from '../dto/leaderboard.find-filters.dto';
+import { LeaderboardFindService } from '../service/leaderboard.find.service';
+import { PaginableResponseDto } from '../../common/paginable.response.dto';
 
 @ApiForbiddenResponse({ description: 'Authorization is required' })
 @ApiBadRequestResponse({ description: 'Bad request' })
@@ -32,7 +35,8 @@ import { LeaderboardUpdateService } from '../service/leaderboard.update.service'
 @Controller({ path: 'leaderboard', version: '1' })
 export class LeaderboardHttpController {
   constructor(
-    private readonly leaderboardFindService: LeaderboardFindOneService,
+    private readonly leaderboardFindOneService: LeaderboardFindOneService,
+    private readonly leaderboardFindService: LeaderboardFindService,
     private readonly leaderboardCreateService: LeaderboardCreateService,
     private readonly leaderboardUpdateService: LeaderboardUpdateService,
   ) {}
@@ -49,7 +53,7 @@ export class LeaderboardHttpController {
     @Param('id', ParseUUIDPipe) id: string,
   ): Promise<LeaderboardDto> {
     const foundLeaderboard: Leaderboard =
-      await this.leaderboardFindService.findOne({
+      await this.leaderboardFindOneService.findOne({
         id,
       });
 
@@ -57,20 +61,25 @@ export class LeaderboardHttpController {
   }
 
   @ApiOkResponse({
-    description: 'Leaderboard found',
-    type: LeaderboardDto,
+    description: 'Leaderboards found',
+    type: PaginableResponseDto<LeaderboardDto>,
+    isArray: true,
   })
   @ApiNotFoundResponse({
-    description: 'Leaderboard not found',
+    description: 'No leaderboard found',
   })
   @Get()
-  async findOneByDate(@Query('date') date: string): Promise<LeaderboardDto> {
-    const foundLeaderboard: Leaderboard =
-      await this.leaderboardFindService.findOne({
-        date: new Date(date),
-      });
+  async find(
+    @Query() leaderboardFindOneFiltersDto: LeaderboardFindFiltersDto,
+  ): Promise<PaginableResponseDto<LeaderboardDto>> {
+    const foundLeaderboards: Leaderboard[] =
+      await this.leaderboardFindService.find(
+        leaderboardFindOneFiltersDto.toDomain(),
+      );
 
-    return new LeaderboardDto(foundLeaderboard);
+    return new PaginableResponseDto(
+      foundLeaderboards.map((leaderboard) => new LeaderboardDto(leaderboard)),
+    );
   }
 
   @ApiCreatedResponse({

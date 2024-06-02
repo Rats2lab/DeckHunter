@@ -27,6 +27,8 @@ import { ProductFindAllService } from '../service/product.find-all.service';
 import { ProductFindOneService } from '../service/product.find-one.service';
 import { ProductUpdateService } from '../service/product.update.service';
 import { ProductWithLeaderboards } from '../interface/product.with-leaderboards.interface';
+import { ProductFindFiltersDto } from '../dto/product.find-filters.dto';
+import { PaginableResponseDto } from '../../common/paginable.response.dto';
 
 //@ApiBearerAuth()
 @ApiForbiddenResponse({ description: 'Authorization is required' })
@@ -65,7 +67,7 @@ export class ProductHttpController {
     description: 'Product not found',
   })
   @Get(':id')
-  async find(
+  async findOne(
     @Param('id', ParseUUIDPipe) id: string,
     @Query('language')
     language: string,
@@ -79,23 +81,24 @@ export class ProductHttpController {
 
   @ApiOkResponse({
     description: 'Products found',
-    type: ProductDto,
+    type: PaginableResponseDto<ProductDto>,
     isArray: true,
   })
   @ApiNotFoundResponse({
     description: 'No product found',
   })
   @Get()
-  async findAll(
-    @Query('language')
-    _language: string,
-    @Query('leaderboardId')
-    leaderboardId: string,
-  ): Promise<ProductDto[]> {
+  async find(
+    @Query() productFindFiltersDto: ProductFindFiltersDto,
+  ): Promise<PaginableResponseDto<ProductDto>> {
     const foundProducts: ProductWithLeaderboards[] =
-      await this.productFindAllService.findAll({ leaderboardId });
+      await this.productFindAllService.findAll(
+        productFindFiltersDto.toDomain(),
+      );
 
-    return foundProducts.map((product) => new ProductDto(product));
+    return new PaginableResponseDto(
+      foundProducts.map((product) => new ProductDto(product)),
+    );
   }
 
   @ApiOkResponse({
