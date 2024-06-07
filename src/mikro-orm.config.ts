@@ -19,7 +19,7 @@ export const mikroOrmConfig = async (): Promise<MikroOrmModuleSyncOptions> => ({
   discovery: {
     warnWhenNoEntities: true,
   },
-  ...(process.env.DB_SSL && {
+  ...(process.env.DB_SSL === 'true' && {
     driverOptions: {
       connection: { ssl: process.env.DB_SSL },
     }
