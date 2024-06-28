@@ -1,25 +1,23 @@
 import { MikroOrmModule } from '@mikro-orm/nestjs';
 import { Module } from '@nestjs/common';
-import { ProductMikroOrmRepository } from './repository/product.mikro-orm.repository';
-import { ProductCreateFromJsonService } from './service/product.create-from-json.service';
-import { ProductCreateService } from './service/product.create.service';
 import { ProductHttpController } from './controller/product.http.controller';
-import { ProductFindOneService } from './service/product.find-one.service';
-import { ProductFindAllService } from './service/product.find-all.service';
 import { ProductMikroOrm } from './entity/product.mikro-orm.entity';
-import { ProductRawHttpController } from './controller/product.raw.http.controller';
+import { ProductMikroOrmRepository } from './repository/product.mikro-orm.repository';
+import { ProductCreateService } from './service/product.create.service';
+import { ProductFindAllService } from './service/product.find-all.service';
+import { ProductFindOneService } from './service/product.find-one.service';
 import { ProductUpdateService } from './service/product.update.service';
 
 @Module({
   imports: [MikroOrmModule.forFeature([ProductMikroOrm])],
-  controllers: [ProductHttpController, ProductRawHttpController],
+  controllers: [ProductHttpController],
   providers: [
-    ProductCreateFromJsonService,
     ProductCreateService,
     ProductFindOneService,
     ProductFindAllService,
     ProductUpdateService,
     ProductMikroOrmRepository,
   ],
+  exports: [ProductCreateService],
 })
 export class ProductNestjsModule {}
