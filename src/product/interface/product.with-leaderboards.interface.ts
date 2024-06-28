@@ -1,13 +1,6 @@
 import { Leaderboard } from '../../leaderboard/interface/leaderboard.interface';
-import { ProductAuthor } from './product-author.interface';
+import { Product } from './product.interface';
 
-export interface ProductWithLeaderboards {
-  id: string;
-  author: ProductAuthor;
-  title: string;
-  description: string;
-  launchDate: Date;
-  votes: number;
-  country: string;
+export interface ProductWithLeaderboards extends Product {
   leaderboards: Leaderboard[];
 }

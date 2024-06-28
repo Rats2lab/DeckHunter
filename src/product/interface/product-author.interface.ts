@@ -5,8 +5,8 @@ export class ProductAuthor {
   id: string;
 
   @ApiProperty()
-  nickname: string;
+  nickname?: string | null;
 
   @ApiProperty()
-  link: string;
+  link?: string | null;
 }
