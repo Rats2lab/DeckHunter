@@ -25,6 +25,7 @@ export class ProductProviderFindProductsService {
             order: ProductHuntProductOrder.RANKING,
             featured: true,
           });
+
         return providerProducts.map((product) => product.toProduct());
       default:
         const unknownProvider: never = findFilters.provider;

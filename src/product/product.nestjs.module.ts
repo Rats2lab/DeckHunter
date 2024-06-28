@@ -11,12 +11,14 @@ import { ProductUpdateService } from './service/product.update.service';
 import { LeaderboardNestjsModule } from '../leaderboard/leaderboard.nestjs.module';
 import { ProductCreateManyService } from './service/product.create-many.service';
 import { ProductSeedService } from './service/product.seed.service';
+import { ProductLeaderboardNestjsModule } from '../product-leaderboard/product-leaderboard.nestjs.module';
 
 @Module({
   imports: [
     MikroOrmModule.forFeature([ProductMikroOrm]),
     ProductProviderNestjsModule,
     LeaderboardNestjsModule,
+    ProductLeaderboardNestjsModule,
   ],
   controllers: [ProductHttpController],
   providers: [

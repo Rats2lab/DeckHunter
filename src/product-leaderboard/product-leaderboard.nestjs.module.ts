@@ -6,6 +6,7 @@ import { ProductLeaderboardMikroOrmRepository } from './repository/product-leade
 import { ProductLeaderboardCreateService } from './service/product-leaderboard.create.service';
 import { ProductLeaderboardFindAllService } from './service/product-leaderboard.find-all.service';
 import { ProductLeaderboardFindOneService } from './service/product-leaderboard.find-one.service';
+import { ProductLeaderboardCreateManyService } from './service/product-leaderboard.create-many.service';
 
 @Module({
   imports: [MikroOrmModule.forFeature([ProductLeaderboardMikroOrm])],
@@ -15,6 +16,8 @@ import { ProductLeaderboardFindOneService } from './service/product-leaderboard.
     ProductLeaderboardFindAllService,
     ProductLeaderboardFindOneService,
     ProductLeaderboardMikroOrmRepository,
+    ProductLeaderboardCreateManyService,
   ],
+  exports: [ProductLeaderboardCreateManyService],
 })
 export class ProductLeaderboardNestjsModule {}
