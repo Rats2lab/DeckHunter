@@ -11,7 +11,7 @@ export class LeaderboardFindOneService {
 
   async findOne(
     leaderboardFindOneFilters: LeaderboardFindOneFilters,
-  ): Promise<Leaderboard> {
+  ): Promise<Leaderboard | undefined> {
     return this.leaderboardRepository.findOne(leaderboardFindOneFilters);
   }
 }
