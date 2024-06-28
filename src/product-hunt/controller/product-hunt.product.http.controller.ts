@@ -6,7 +6,7 @@ import {
   ApiForbiddenResponse,
   ApiTags,
 } from '@nestjs/swagger';
-import { ProductHuntProductDto } from '../dto/product-hunt.product.dto';
+import { ProductHuntWebProductDto } from '../dto/product-hunt.web-product.dto';
 import { ProductHuntCreateWebProductService } from '../service/product-hunt.create-web-product.service';
 import { ProductDto } from '../../product/dto/product.dto';
 import { Product } from '../../product/interface/product.interface';
@@ -25,9 +25,11 @@ export class ProductHuntProductHttpController {
     description: 'Product created',
     type: ProductDto,
   })
-  @ApiBody({ type: ProductHuntProductDto })
+  @ApiBody({ type: ProductHuntWebProductDto })
   @Post()
-  async create(@Body() webProduct: ProductHuntProductDto): Promise<ProductDto> {
+  async create(
+    @Body() webProduct: ProductHuntWebProductDto,
+  ): Promise<ProductDto> {
     const createdProduct: Product =
       await this.productHuntCreateService.createProduct(webProduct.toDomain());
 
