@@ -9,6 +9,7 @@ import { ProductWithLeaderboards } from '../interface/product.with-leaderboards.
 import { ProductCreate } from '../type/product.create.type';
 import { ProductCreateManyService } from './product.create-many.service';
 import { ProductFindAllService } from './product.find-all.service';
+import { DateTime } from 'luxon';
 
 @Injectable()
 export class ProductSeedService {
@@ -28,19 +29,21 @@ export class ProductSeedService {
     const leaderboardLink: string =
       await this.productProviderGetLeaderboardLinkService.getLeaderboardLink({
         provider: productSeedParams.provider,
-        date: productSeedParams.leaderboardDate,
+        date: DateTime.fromJSDate(productSeedParams.leaderboardDate),
       });
 
     const leaderboard: Leaderboard =
       await this.leaderboardCreateIfNotExistsService.createIfNotExists({
-        date: productSeedParams.leaderboardDate.startOf('day').toJSDate(),
+        date: DateTime.fromJSDate(productSeedParams.leaderboardDate)
+          .startOf('day')
+          .toJSDate(),
         link: leaderboardLink,
       });
 
     const foundProductsOnProvider: ProductCreate[] =
       await this.productProviderGetProductsService.findProducts({
         provider: productSeedParams.provider,
-        date: productSeedParams.leaderboardDate,
+        date: DateTime.fromJSDate(productSeedParams.leaderboardDate),
       });
 
     await this.productCreateManyService.createMany(foundProductsOnProvider);
