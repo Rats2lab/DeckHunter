@@ -63,7 +63,7 @@ export class ProductMikroOrm implements Product {
   leaderboards: Collection<LeaderboardMikroOrm>;
 
   // TODO: Poner como no null tras la migración inicial
-  @Enum({ type: () => ProductProviderName, nullable: true })
+  @Enum({ items: () => ProductProviderName, nullable: true })
   provider: ProductProviderName | null;
 
   @Property({
