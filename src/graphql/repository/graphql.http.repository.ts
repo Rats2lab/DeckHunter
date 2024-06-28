@@ -12,10 +12,22 @@ export class GraphqlHttpRepository<
   constructor(private readonly httpService: HttpService) {}
 
   async find(graphqlFindFilters: GraphqlFindFilters): Promise<FoundElement[]> {
+    let elementFilters: string[] = [];
+    if (graphqlFindFilters.queryFilters) {
+      const entries: [string, string | number][] = Object.entries(
+        graphqlFindFilters.queryFilters,
+      );
+      elementFilters = entries.map((e) => `${e[0]}: ${e[1]}`);
+    }
+
     const graphqlQuery = {
       operationName: `${graphqlFindFilters.queryName}`,
       query: `query ${graphqlFindFilters.queryName} { ${
         graphqlFindFilters.elementName
+      }${
+        elementFilters.length
+          ? '('.concat(elementFilters.join(',').concat(')'))
+          : ''
       } { edges { node { ${graphqlFindFilters.queryFields.join(' ')} } } } }`,
       variables: {},
     };

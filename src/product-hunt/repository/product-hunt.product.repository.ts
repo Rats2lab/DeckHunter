@@ -17,7 +17,9 @@ export class ProductHuntProductRepository {
     >,
   ) {}
 
-  async find(): Promise<ProductHuntProduct[]> {
+  async find(
+    queryFilters: Record<string, string | number>,
+  ): Promise<ProductHuntProduct[]> {
     const defaultHeaders: AxiosHeaders = await this.getApiHeaders();
 
     const queryFields: string[] = [
@@ -41,6 +43,7 @@ export class ProductHuntProductRepository {
         elementName: 'posts',
         queryName: 'GetTodayPosts',
         queryFields,
+        queryFilters,
         headers: defaultHeaders,
       });
 

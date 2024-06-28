@@ -22,6 +22,6 @@ import { HttpModule } from '@nestjs/axios';
     ProductHuntFindProductService,
     ProductHuntProductRepository,
   ],
-  exports: [ProductHuntCreateWebProductService],
+  exports: [ProductHuntCreateWebProductService, ProductHuntFindProductService],
 })
 export class ProductHuntNestjsModule {}
