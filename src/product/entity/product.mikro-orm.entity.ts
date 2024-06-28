@@ -4,6 +4,7 @@ import {
   DateTimeType,
   DateType,
   Entity,
+  Enum,
   ManyToMany,
   PrimaryKey,
   Property,
@@ -13,6 +14,7 @@ import { Product } from '../interface/product.interface';
 import { LeaderboardMikroOrm } from '../../leaderboard/entity/leaderboard.mikro-orm.entity';
 import { ProductLeaderboardMikroOrm } from '../../product-leaderboard/entity/product-leaderboard.mikro-orm.entity';
 import { ProductWithLeaderboards } from '../interface/product.with-leaderboards.interface';
+import { ProductProviderName } from '../../product-provider/enum/product-provider.name.enum';
 
 @Entity({ tableName: 'product' })
 export class ProductMikroOrm implements Product {
@@ -60,6 +62,10 @@ export class ProductMikroOrm implements Product {
   })
   leaderboards: Collection<LeaderboardMikroOrm>;
 
+  // TODO: Poner como no null tras la migración inicial
+  @Enum({ type: () => ProductProviderName, nullable: true })
+  provider: ProductProviderName | null;
+
   @Property({
     type: DateTimeType,
     columnType: 'timestamp',
@@ -82,6 +88,7 @@ export class ProductMikroOrm implements Product {
       launchDate: this.launchDate,
       votes: this.votes,
       country: this.country,
+      provider: this.provider ?? ProductProviderName.PRODUCT_HUNT, // TODO: Quitar hardcodeo
       leaderboards: this.leaderboards.isInitialized()
         ? this.leaderboards.getItems()
         : [],
