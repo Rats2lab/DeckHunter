@@ -1,4 +1,6 @@
-export interface ProductHuntProduct {
+import { ProductTransformableObject } from '../../product/interface/product.transformable-object.type';
+
+export interface ProductHuntProduct extends ProductTransformableObject {
   id: string;
   name: string;
   tagline: string;

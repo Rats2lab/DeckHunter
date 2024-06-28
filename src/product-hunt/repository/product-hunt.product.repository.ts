@@ -5,6 +5,7 @@ import { lastValueFrom } from 'rxjs';
 import { GraphqlFindService } from '../../graphql/service/graphql.find.service';
 import { ProductHuntAccessTokenResponse } from '../interface/product-hunt.access-token-response.interface';
 import { ProductHuntProduct } from '../interface/product-hunt.product.interface';
+import { ProductHuntProductDto } from '../dto/product-hunt.product.dto';
 
 @Injectable()
 export class ProductHuntProductRepository {
@@ -34,13 +35,19 @@ export class ProductHuntProductRepository {
       'createdAt',
     ];
 
-    return this.graphqlFindService.find({
-      url: 'https://api.producthunt.com/v2/api/graphql',
-      elementName: 'posts',
-      queryName: 'GetTodayPosts',
-      queryFields,
-      headers: defaultHeaders,
-    });
+    const foundProducts: ProductHuntProduct[] =
+      await this.graphqlFindService.find({
+        url: 'https://api.producthunt.com/v2/api/graphql',
+        elementName: 'posts',
+        queryName: 'GetTodayPosts',
+        queryFields,
+        headers: defaultHeaders,
+      });
+
+    // FIX ME: Needs to instance object before use its methods
+    return foundProducts.map((product) =>
+      new ProductHuntProductDto(product).toDomain(),
+    );
   }
 
   private async getApiHeaders(): Promise<AxiosHeaders> {
