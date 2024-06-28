@@ -26,6 +26,7 @@ export class ProductHuntProductDto
 
   toProduct(): ProductCreate {
     return {
+      providerExternalId: this.id,
       author: {
         id: this.userId,
       },

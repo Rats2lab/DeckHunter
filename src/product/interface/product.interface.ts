@@ -3,6 +3,7 @@ import { ProductAuthor } from './product-author.interface';
 
 export interface Product {
   id: string;
+  providerExternalId: string;
   author: ProductAuthor;
   title: string;
   description: string;
