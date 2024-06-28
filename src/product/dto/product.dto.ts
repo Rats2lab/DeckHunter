@@ -13,6 +13,9 @@ export class ProductDto
   @ApiProperty()
   id: string;
 
+  @ApiProperty()
+  providerExternalId: string;
+
   @ApiProperty({ type: ProductAuthor })
   author: ProductAuthor;
 
@@ -45,6 +48,7 @@ export class ProductDto
   toDomain(): ProductWithLeaderboards {
     return {
       id: this.id,
+      providerExternalId: this.providerExternalId,
       author: this.author,
       title: this.title,
       description: this.description,

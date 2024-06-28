@@ -5,6 +5,9 @@ import { ProductCreate } from '../type/product.create.type';
 import { ProductProviderName } from '../../product-provider/enum/product-provider.name.enum';
 
 export class ProductCreateDto implements InfrastructureObject<ProductCreate> {
+  @ApiProperty()
+  providerExternalId: string;
+
   @ApiProperty({ type: ProductAuthor })
   author: ProductAuthor;
 
@@ -32,6 +35,7 @@ export class ProductCreateDto implements InfrastructureObject<ProductCreate> {
 
   toDomain(): ProductCreate {
     return {
+      providerExternalId: this.providerExternalId,
       author: this.author,
       title: this.title,
       description: this.description,

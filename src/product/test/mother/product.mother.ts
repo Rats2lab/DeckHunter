@@ -7,6 +7,7 @@ export class ProductMother {
   getRandomProduct(): Product {
     return {
       id: UtilsMother.getRandomUuid(),
+      providerExternalId: UtilsMother.getRandomUuid(),
       author: new ProductAuthorMother().getRandomProductAuthor(),
       title: UtilsMother.getRandomString(30),
       description: UtilsMother.getRandomString(150),

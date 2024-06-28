@@ -5,6 +5,7 @@ import {
   DateType,
   Entity,
   Enum,
+  Index,
   ManyToMany,
   PrimaryKey,
   Property,
@@ -16,12 +17,16 @@ import { ProductLeaderboardMikroOrm } from '../../product-leaderboard/entity/pro
 import { ProductWithLeaderboards } from '../interface/product.with-leaderboards.interface';
 import { ProductProviderName } from '../../product-provider/enum/product-provider.name.enum';
 
+@Index({ properties: ['providerExternalId', 'provider'] })
 @Entity({ tableName: 'product' })
 export class ProductMikroOrm implements Product {
   @PrimaryKey({
     columnType: 'uuid',
   })
   id: string;
+
+  @Property({ length: 50 })
+  providerExternalId: string;
 
   @Property({
     columnType: 'jsonb',
@@ -62,9 +67,8 @@ export class ProductMikroOrm implements Product {
   })
   leaderboards: Collection<LeaderboardMikroOrm>;
 
-  // TODO: Poner como no null tras la migración inicial
-  @Enum({ items: () => ProductProviderName, nullable: true })
-  provider: ProductProviderName | null;
+  @Enum({ items: () => ProductProviderName })
+  provider: ProductProviderName;
 
   @Property({
     type: DateTimeType,
@@ -82,6 +86,7 @@ export class ProductMikroOrm implements Product {
   toDomain(): ProductWithLeaderboards {
     return {
       id: this.id,
+      providerExternalId: this.providerExternalId,
       author: this.author,
       title: this.title,
       description: this.description,
