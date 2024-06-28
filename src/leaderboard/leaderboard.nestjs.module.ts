@@ -7,6 +7,7 @@ import { LeaderboardHttpController } from './controller/leaderboard.http.control
 import { LeaderboardUpdateService } from './service/leaderboard.update.service';
 import { LeaderboardFindOneService } from './service/leaderboard.find-one.service';
 import { LeaderboardFindService } from './service/leaderboard.find.service';
+import { LeaderboardCreateIfNotExistsService } from './service/leaderboard.create-if-not-exists.service';
 
 @Module({
   imports: [MikroOrmModule.forFeature([LeaderboardMikroOrm])],
@@ -16,7 +17,9 @@ import { LeaderboardFindService } from './service/leaderboard.find.service';
     LeaderboardFindService,
     LeaderboardUpdateService,
     LeaderboardMikroOrmRepository,
+    LeaderboardCreateIfNotExistsService,
   ],
   controllers: [LeaderboardHttpController],
+  exports: [LeaderboardCreateIfNotExistsService],
 })
 export class LeaderboardNestjsModule {}

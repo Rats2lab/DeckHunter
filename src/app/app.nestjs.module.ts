@@ -7,6 +7,9 @@ import { ProductNestjsModule } from '../product/product.nestjs.module';
 import { LeaderboardNestjsModule } from '../leaderboard/leaderboard.nestjs.module';
 import { ProductLeaderboardNestjsModule } from '../product-leaderboard/product-leaderboard.nestjs.module';
 import mikroOrmConfig from '../mikro-orm.config';
+import { ProductProviderNestjsModule } from '../product-provider/product-provider.nestjs.module';
+import { ProductHuntNestjsModule } from '../product-hunt/product-hunt.nestjs.module';
+import { GraphqlNestjsModule } from '../graphql/graphql.nestjs.module';
 
 @Module({
   imports: [
@@ -16,28 +19,12 @@ import mikroOrmConfig from '../mikro-orm.config';
     MikroOrmModule.forRootAsync({
       useFactory: mikroOrmConfig,
     }),
-    /*MikroOrmModule.forRoot({
-      type: 'mariadb',
-      host: 'localhost',
-      port: 3306,
-      user: 'back_app',
-      password: '3k1Kfl@v7',
-      dbName: 'hunters_labs_db',*/
-    //entities: [`${process.cwd()}/dist/src/**/*entity.{js,ts}`],
-    /*forceUtcTimezone: true,
-      migrations: {
-        tableName: 'mikro-orm-migrations',
-        path: 'dist/src/database/mikro-orm/migration',
-        snapshot: false,
-        transactional: true,
-      },
-      discovery: {
-        warnWhenNoEntities: true,
-      },
-    }),*/
     LeaderboardNestjsModule,
     ProductNestjsModule,
     ProductLeaderboardNestjsModule,
+    GraphqlNestjsModule,
+    ProductHuntNestjsModule,
+    ProductProviderNestjsModule,
   ],
   providers: [
     {
