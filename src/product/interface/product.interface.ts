@@ -1,4 +1,4 @@
-import { Leaderboard } from '../../leaderboard/interface/leaderboard.interface';
+import { ProductProviderName } from '../../product-provider/enum/product-provider.name.enum';
 import { ProductAuthor } from './product-author.interface';
 
 export interface Product {
@@ -9,4 +9,5 @@ export interface Product {
   launchDate: Date;
   votes: number;
   country: string;
+  provider: ProductProviderName;
 }
