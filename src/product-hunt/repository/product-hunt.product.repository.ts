@@ -6,10 +6,12 @@ import { GraphqlFindService } from '../../graphql/service/graphql.find.service';
 import { ProductHuntAccessTokenResponse } from '../interface/product-hunt.access-token-response.interface';
 import { ProductHuntProduct } from '../interface/product-hunt.product.interface';
 import { ProductHuntProductDto } from '../dto/product-hunt.product.dto';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class ProductHuntProductRepository {
   constructor(
+    private readonly configService: ConfigService,
     private readonly httpService: HttpService,
     private readonly graphqlFindService: GraphqlFindService<
       'posts',
@@ -69,8 +71,8 @@ export class ProductHuntProductRepository {
       this.httpService.post<ProductHuntAccessTokenResponse>(
         'https://api.producthunt.com/v2/oauth/token',
         {
-          client_id: '{{productHunt_apiClientId}}',
-          client_secret: '{{productHunt_apiClientSecret}}',
+          client_id: 'v3tln6dCrk0Bw66d_DufF_AlAq1eWpnYesSkt8pWg_Y',
+          client_secret: 'aikZ7Q9973MB4xIVwiYYGx2eHcZB-Pv4hiXMDthIP4Y',
           grant_type: 'client_credentials',
         },
         {

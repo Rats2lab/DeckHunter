@@ -10,6 +10,8 @@ import { ProductCreate } from '../type/product.create.type';
 import { ProductCreateManyService } from './product.create-many.service';
 import { ProductFindAllService } from './product.find-all.service';
 import { DateTime } from 'luxon';
+import { ProductLeaderboardCreateManyService } from '../../product-leaderboard/service/product-leaderboard.create-many.service';
+import { Product } from '../interface/product.interface';
 
 @Injectable()
 export class ProductSeedService {
@@ -19,6 +21,7 @@ export class ProductSeedService {
     private readonly productProviderGetLeaderboardLinkService: ProductProviderGetLeaderboardLinkService,
     private readonly productCreateManyService: ProductCreateManyService,
     private readonly productFindAllService: ProductFindAllService,
+    private readonly productLeaderboardCreateManyService: ProductLeaderboardCreateManyService,
   ) {}
 
   async seed(
@@ -46,12 +49,22 @@ export class ProductSeedService {
         date: DateTime.fromJSDate(productSeedParams.leaderboardDate),
       });
 
-    await this.productCreateManyService.createMany(foundProductsOnProvider);
+    const createdProducts: Product[] =
+      await this.productCreateManyService.createMany(foundProductsOnProvider);
+
+    await this.productLeaderboardCreateManyService.createMany(
+      createdProducts.map((product) => {
+        return {
+          productId: product.id,
+          leaderboardId: leaderboard.id,
+        };
+      }),
+    );
 
     return this.productFindAllService.findAll({
       leaderboardId: leaderboard.id,
       offset: 0,
-      limit: 100,
+      limit: 1000,
     });
   }
 }

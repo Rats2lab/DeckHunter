@@ -17,7 +17,15 @@ export class GraphqlHttpRepository<
       const entries: [string, string | number][] = Object.entries(
         graphqlFindFilters.queryFilters,
       );
-      elementFilters = entries.map((e) => `${e[0]}: ${e[1]}`);
+
+      // TODO: FIX
+      elementFilters = entries.map((e) => {
+        if (e[0].includes('posted')) {
+          return `${e[0]}: "${e[1]}"`;
+        } else {
+          return `${e[0]}: ${e[1]}`;
+        }
+      });
     }
 
     const graphqlQuery = {
