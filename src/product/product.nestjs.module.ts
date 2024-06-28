@@ -10,6 +10,7 @@ import { ProductFindOneService } from './service/product.find-one.service';
 import { ProductUpdateService } from './service/product.update.service';
 import { LeaderboardNestjsModule } from '../leaderboard/leaderboard.nestjs.module';
 import { ProductCreateManyService } from './service/product.create-many.service';
+import { ProductSeedService } from './service/product.seed.service';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { ProductCreateManyService } from './service/product.create-many.service'
     ProductUpdateService,
     ProductMikroOrmRepository,
     ProductCreateManyService,
+    ProductSeedService,
   ],
   exports: [ProductCreateService],
 })

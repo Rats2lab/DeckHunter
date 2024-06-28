@@ -10,7 +10,6 @@ import {
 } from '@nestjs/common';
 import {
   ApiBadRequestResponse,
-  ApiBearerAuth,
   ApiBody,
   ApiCreatedResponse,
   ApiForbiddenResponse,
@@ -18,17 +17,19 @@ import {
   ApiOkResponse,
   ApiTags,
 } from '@nestjs/swagger';
+import { PaginableResponseDto } from '../../common/paginable.response.dto';
 import { ProductCreateDto } from '../dto/product.create.dto';
 import { ProductDto } from '../dto/product.dto';
+import { ProductFindFiltersDto } from '../dto/product.find-filters.dto';
+import { ProductSeedDto } from '../dto/product.seed.dto';
 import { ProductUpdateFieldsDto } from '../dto/product.update-fields.dto';
 import { Product } from '../interface/product.interface';
+import { ProductWithLeaderboards } from '../interface/product.with-leaderboards.interface';
 import { ProductCreateService } from '../service/product.create.service';
 import { ProductFindAllService } from '../service/product.find-all.service';
 import { ProductFindOneService } from '../service/product.find-one.service';
+import { ProductSeedService } from '../service/product.seed.service';
 import { ProductUpdateService } from '../service/product.update.service';
-import { ProductWithLeaderboards } from '../interface/product.with-leaderboards.interface';
-import { ProductFindFiltersDto } from '../dto/product.find-filters.dto';
-import { PaginableResponseDto } from '../../common/paginable.response.dto';
 
 //@ApiBearerAuth()
 @ApiForbiddenResponse({ description: 'Authorization is required' })
@@ -41,6 +42,7 @@ export class ProductHttpController {
     private readonly productFindOneService: ProductFindOneService,
     private readonly productFindAllService: ProductFindAllService,
     private readonly productUpdateService: ProductUpdateService,
+    private readonly productSeedService: ProductSeedService,
   ) {}
 
   @ApiCreatedResponse({
@@ -57,6 +59,21 @@ export class ProductHttpController {
     );
 
     return new ProductDto(createdProduct);
+  }
+  @ApiCreatedResponse({
+    description: 'Products seeded',
+    type: ProductDto,
+  })
+  @ApiBody({ type: ProductSeedDto })
+  @Post('seed')
+  async seed(@Body() productSeedDto: ProductSeedDto): Promise<ProductDto[]> {
+    const createdProducts: Product[] = await this.productSeedService.seed(
+      productSeedDto.toDomain(),
+    );
+
+    return createdProducts.map(
+      (createdProduct) => new ProductDto(createdProduct),
+    );
   }
 
   @ApiOkResponse({
