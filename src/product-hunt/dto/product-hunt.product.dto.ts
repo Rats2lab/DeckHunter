@@ -1,8 +1,7 @@
-import { ApiProperty } from '@nestjs/swagger';
 import { InfrastructureObject } from '../../common/infrastructure.object.type';
-import { ProductHuntProduct } from '../interface/product-hunt.product.interface';
 import { ProductProviderName } from '../../product-provider/enum/product-provider.name.enum';
 import { ProductCreate } from '../../product/type/product.create.type';
+import { ProductHuntProduct } from '../interface/product-hunt.product.interface';
 
 export class ProductHuntProductDto
   implements InfrastructureObject<ProductHuntProduct>
@@ -13,6 +12,7 @@ export class ProductHuntProductDto
   description: string;
   website: string;
   url: string;
+  thumbnail: { url: string };
   userId: string;
   votesCount: number;
   reviewsCount: number;
@@ -27,6 +27,9 @@ export class ProductHuntProductDto
   toProduct(): ProductCreate {
     return {
       providerExternalId: this.id,
+      providerExternalLink: this.url,
+      link: this.website,
+      thumbnail: this.thumbnail.url,
       title: this.name,
       description: this.description,
       launchDate: new Date(this.featuredAt),
@@ -44,6 +47,7 @@ export class ProductHuntProductDto
       website: this.website,
       url: this.url,
       userId: this.userId,
+      thumbnail: this.thumbnail,
       votesCount: this.votesCount,
       reviewsCount: this.reviewsCount,
       reviewsRating: this.reviewsRating,

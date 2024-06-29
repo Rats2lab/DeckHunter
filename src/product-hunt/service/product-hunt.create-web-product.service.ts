@@ -10,6 +10,9 @@ export class ProductHuntCreateWebProductService {
   async createProduct(webProduct: ProductHuntWebProduct): Promise<Product> {
     return this.productCreateService.create({
       providerExternalId: webProduct.data.post.product.id,
+      providerExternalLink: webProduct.data.post.product.url,
+      link: webProduct.data.post.product.websiteUrl,
+      thumbnail: '',
       title: webProduct.data.post.product.name,
       description: webProduct.data.post.product.description,
       launchDate: new Date(webProduct.data.post.featuredAt),

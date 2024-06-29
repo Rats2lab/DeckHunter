@@ -6,6 +6,7 @@ export interface ProductHuntProduct extends ProductTransformableObject {
   tagline: string;
   description: string;
   website: string;
+  thumbnail: { url: string };
   url: string;
   userId: string;
   votesCount: number;
