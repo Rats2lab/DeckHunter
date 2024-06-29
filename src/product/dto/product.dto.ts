@@ -31,6 +31,9 @@ export class ProductDto
   thumbnail: string;
 
   @ApiProperty()
+  tagline: string;
+
+  @ApiProperty()
   launchDate: Date;
 
   @ApiProperty()
@@ -54,6 +57,7 @@ export class ProductDto
       providerExternalLink: this.providerExternalLink,
       link: this.link,
       thumbnail: this.thumbnail,
+      tagline: this.tagline,
       title: this.title,
       description: this.description,
       launchDate: this.launchDate,

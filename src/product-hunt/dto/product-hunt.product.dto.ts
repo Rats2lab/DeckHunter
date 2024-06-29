@@ -28,6 +28,7 @@ export class ProductHuntProductDto
     return {
       providerExternalId: this.id,
       providerExternalLink: this.url,
+      tagline: this.tagline,
       link: this.website,
       thumbnail: this.thumbnail.url,
       title: this.name,

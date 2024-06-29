@@ -4,6 +4,7 @@ export interface Product {
   id: string;
   providerExternalId: string;
   link: string;
+  tagline: string;
   providerExternalLink: string;
   thumbnail: string;
   title: string;

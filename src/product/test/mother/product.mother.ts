@@ -7,6 +7,7 @@ export class ProductMother {
     return {
       id: UtilsMother.getRandomUuid(),
       providerExternalId: UtilsMother.getRandomUuid(),
+      tagline: UtilsMother.getRandomUuid(),
       providerExternalLink: UtilsMother.getRandomUuid(),
       link: UtilsMother.getRandomUuid(),
       thumbnail: UtilsMother.getRandomUuid(),
