@@ -9,6 +9,7 @@ import {
   ManyToMany,
   PrimaryKey,
   Property,
+  Unique,
 } from '@mikro-orm/core';
 import { Product } from '../interface/product.interface';
 import { LeaderboardMikroOrm } from '../../leaderboard/entity/leaderboard.mikro-orm.entity';
@@ -16,7 +17,7 @@ import { ProductLeaderboardMikroOrm } from '../../product-leaderboard/entity/pro
 import { ProductWithLeaderboards } from '../interface/product.with-leaderboards.interface';
 import { ProductProviderName } from '../../product-provider/enum/product-provider.name.enum';
 
-@Index({ properties: ['providerExternalId', 'provider'] })
+@Unique({ properties: ['providerExternalId', 'provider'] })
 @Entity({ tableName: 'product' })
 export class ProductMikroOrm implements Product {
   @PrimaryKey({
