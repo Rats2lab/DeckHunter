@@ -36,6 +36,7 @@ export class LeaderboardMikroOrmRepository {
       LeaderboardMikroOrm,
       {},
       {
+        orderBy: { date: 'desc' },
         offset: leaderboardFindFilters.offset,
         limit: leaderboardFindFilters.limit,
       },
