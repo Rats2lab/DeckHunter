@@ -28,6 +28,9 @@ export class ProductMikroOrm implements Product {
   @Property({ length: 50 })
   providerExternalId: string;
 
+  @Property({ length: 250 })
+  tagline: string;
+
   @Property({
     length: 100,
   })
@@ -94,6 +97,7 @@ export class ProductMikroOrm implements Product {
     return {
       id: this.id,
       providerExternalId: this.providerExternalId,
+      tagline: this.tagline,
       link: this.link,
       providerExternalLink: this.providerExternalLink,
       thumbnail: this.thumbnail,

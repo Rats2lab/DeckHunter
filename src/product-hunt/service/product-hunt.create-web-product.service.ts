@@ -9,6 +9,7 @@ export class ProductHuntCreateWebProductService {
   constructor(private readonly productCreateService: ProductCreateService) {}
   async createProduct(webProduct: ProductHuntWebProduct): Promise<Product> {
     return this.productCreateService.create({
+      tagline: webProduct.data.post.product.tagline,
       providerExternalId: webProduct.data.post.product.id,
       providerExternalLink: webProduct.data.post.product.url,
       link: webProduct.data.post.product.websiteUrl,
