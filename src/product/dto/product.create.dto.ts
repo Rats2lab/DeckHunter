@@ -1,15 +1,11 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { InfrastructureObject } from '../../common/infrastructure.object.type';
-import { ProductAuthor } from '../interface/product-author.interface';
 import { ProductCreate } from '../type/product.create.type';
 import { ProductProviderName } from '../../product-provider/enum/product-provider.name.enum';
 
 export class ProductCreateDto implements InfrastructureObject<ProductCreate> {
   @ApiProperty()
   providerExternalId: string;
-
-  @ApiProperty({ type: ProductAuthor })
-  author: ProductAuthor;
 
   @ApiProperty()
   title: string;
@@ -23,9 +19,6 @@ export class ProductCreateDto implements InfrastructureObject<ProductCreate> {
   @ApiProperty()
   votes: number;
 
-  @ApiProperty()
-  country: string;
-
   @ApiProperty({ enum: ProductProviderName })
   provider: ProductProviderName;
 
@@ -36,12 +29,10 @@ export class ProductCreateDto implements InfrastructureObject<ProductCreate> {
   toDomain(): ProductCreate {
     return {
       providerExternalId: this.providerExternalId,
-      author: this.author,
       title: this.title,
       description: this.description,
       launchDate: this.launchDate,
       votes: this.votes,
-      country: this.country,
       provider: this.provider,
     };
   }

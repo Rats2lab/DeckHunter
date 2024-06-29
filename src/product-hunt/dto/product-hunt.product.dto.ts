@@ -27,14 +27,10 @@ export class ProductHuntProductDto
   toProduct(): ProductCreate {
     return {
       providerExternalId: this.id,
-      author: {
-        id: this.userId,
-      },
       title: this.name,
       description: this.description,
       launchDate: new Date(this.featuredAt),
       votes: this.votesCount,
-      country: 'TBD', // TODO: Find alternative
       provider: ProductProviderName.PRODUCT_HUNT,
     };
   }
