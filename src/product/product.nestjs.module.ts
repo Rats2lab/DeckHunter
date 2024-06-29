@@ -12,6 +12,7 @@ import { LeaderboardNestjsModule } from '../leaderboard/leaderboard.nestjs.modul
 import { ProductCreateManyService } from './service/product.create-many.service';
 import { ProductSeedService } from './service/product.seed.service';
 import { ProductLeaderboardNestjsModule } from '../product-leaderboard/product-leaderboard.nestjs.module';
+import { ProductCreateIfNotExistsService } from './service/product.create-if-not-exists.service';
 
 @Module({
   imports: [
@@ -29,6 +30,7 @@ import { ProductLeaderboardNestjsModule } from '../product-leaderboard/product-l
     ProductMikroOrmRepository,
     ProductCreateManyService,
     ProductSeedService,
+    ProductCreateIfNotExistsService,
   ],
   exports: [ProductCreateService],
 })
