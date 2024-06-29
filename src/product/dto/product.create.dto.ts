@@ -14,6 +14,15 @@ export class ProductCreateDto implements InfrastructureObject<ProductCreate> {
   description: string;
 
   @ApiProperty()
+  providerExternalLink: string;
+
+  @ApiProperty()
+  link: string;
+
+  @ApiProperty()
+  thumbnail: string;
+
+  @ApiProperty()
   launchDate: Date;
 
   @ApiProperty()
@@ -29,6 +38,9 @@ export class ProductCreateDto implements InfrastructureObject<ProductCreate> {
   toDomain(): ProductCreate {
     return {
       providerExternalId: this.providerExternalId,
+      providerExternalLink: this.providerExternalLink,
+      link: this.link,
+      thumbnail: this.thumbnail,
       title: this.title,
       description: this.description,
       launchDate: this.launchDate,

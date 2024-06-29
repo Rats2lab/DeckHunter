@@ -3,6 +3,9 @@ import { ProductProviderName } from '../../product-provider/enum/product-provide
 export interface Product {
   id: string;
   providerExternalId: string;
+  link: string;
+  providerExternalLink: string;
+  thumbnail: string;
   title: string;
   description: string;
   launchDate: Date;

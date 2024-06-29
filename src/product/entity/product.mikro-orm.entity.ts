@@ -47,6 +47,21 @@ export class ProductMikroOrm implements Product {
   })
   votes: number;
 
+  @Property({
+    length: 500,
+  })
+  providerExternalLink: string;
+
+  @Property({
+    length: 500,
+  })
+  thumbnail: string;
+
+  @Property({
+    length: 500,
+  })
+  link: string;
+
   @ManyToMany({
     entity: () => LeaderboardMikroOrm,
     owner: true,
@@ -78,6 +93,9 @@ export class ProductMikroOrm implements Product {
     return {
       id: this.id,
       providerExternalId: this.providerExternalId,
+      link: this.link,
+      providerExternalLink: this.providerExternalLink,
+      thumbnail: this.thumbnail,
       title: this.title,
       description: this.description,
       launchDate: this.launchDate,

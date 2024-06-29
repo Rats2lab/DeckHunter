@@ -22,6 +22,15 @@ export class ProductDto
   description: string;
 
   @ApiProperty()
+  providerExternalLink: string;
+
+  @ApiProperty()
+  link: string;
+
+  @ApiProperty()
+  thumbnail: string;
+
+  @ApiProperty()
   launchDate: Date;
 
   @ApiProperty()
@@ -42,6 +51,9 @@ export class ProductDto
     return {
       id: this.id,
       providerExternalId: this.providerExternalId,
+      providerExternalLink: this.providerExternalLink,
+      link: this.link,
+      thumbnail: this.thumbnail,
       title: this.title,
       description: this.description,
       launchDate: this.launchDate,
