@@ -10,7 +10,6 @@ import {
   PrimaryKey,
   Property,
 } from '@mikro-orm/core';
-import { ProductAuthor } from '../interface/product-author.interface';
 import { Product } from '../interface/product.interface';
 import { LeaderboardMikroOrm } from '../../leaderboard/entity/leaderboard.mikro-orm.entity';
 import { ProductLeaderboardMikroOrm } from '../../product-leaderboard/entity/product-leaderboard.mikro-orm.entity';
@@ -27,11 +26,6 @@ export class ProductMikroOrm implements Product {
 
   @Property({ length: 50 })
   providerExternalId: string;
-
-  @Property({
-    columnType: 'jsonb',
-  })
-  author: ProductAuthor;
 
   @Property({
     length: 100,
@@ -52,9 +46,6 @@ export class ProductMikroOrm implements Product {
     type: BigIntType,
   })
   votes: number;
-
-  @Property({ length: 3 })
-  country: string;
 
   @ManyToMany({
     entity: () => LeaderboardMikroOrm,
@@ -87,13 +78,11 @@ export class ProductMikroOrm implements Product {
     return {
       id: this.id,
       providerExternalId: this.providerExternalId,
-      author: this.author,
       title: this.title,
       description: this.description,
       launchDate: this.launchDate,
       votes: this.votes,
-      country: this.country,
-      provider: this.provider ?? ProductProviderName.PRODUCT_HUNT, // TODO: Quitar hardcodeo
+      provider: this.provider,
       leaderboards: this.leaderboards.isInitialized()
         ? this.leaderboards.getItems()
         : [],

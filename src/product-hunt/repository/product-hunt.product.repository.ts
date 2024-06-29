@@ -32,6 +32,7 @@ export class ProductHuntProductRepository {
       'website',
       'url',
       'userId',
+      'thumbnail { url }',
       'votesCount',
       'reviewsCount',
       'reviewsRating',

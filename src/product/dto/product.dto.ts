@@ -2,7 +2,6 @@ import { ApiProperty } from '@nestjs/swagger';
 import { Exclude } from 'class-transformer';
 import { InfrastructureObject } from '../../common/infrastructure.object.type';
 import { LeaderboardDto } from '../../leaderboard/dto/leaderboard.dto';
-import { ProductAuthor } from '../interface/product-author.interface';
 import { Product } from '../interface/product.interface';
 import { ProductWithLeaderboards } from '../interface/product.with-leaderboards.interface';
 import { ProductProviderName } from '../../product-provider/enum/product-provider.name.enum';
@@ -16,9 +15,6 @@ export class ProductDto
   @ApiProperty()
   providerExternalId: string;
 
-  @ApiProperty({ type: ProductAuthor })
-  author: ProductAuthor;
-
   @ApiProperty()
   title: string;
 
@@ -30,9 +26,6 @@ export class ProductDto
 
   @ApiProperty()
   votes: number;
-
-  @ApiProperty()
-  country: string;
 
   @ApiProperty({ type: LeaderboardDto, isArray: true })
   leaderboards: LeaderboardDto[];
@@ -49,12 +42,10 @@ export class ProductDto
     return {
       id: this.id,
       providerExternalId: this.providerExternalId,
-      author: this.author,
       title: this.title,
       description: this.description,
       launchDate: this.launchDate,
       votes: this.votes,
-      country: this.country,
       provider: this.provider,
       leaderboards: this.leaderboards.map((leaderboard) =>
         leaderboard.toDomain(),
