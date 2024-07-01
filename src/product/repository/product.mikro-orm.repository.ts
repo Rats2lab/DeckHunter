@@ -40,8 +40,8 @@ export class ProductMikroOrmRepository {
       {},
       {
         populate: ['leaderboards'],
-        offset: productFindFilters.offset,
-        limit: productFindFilters.limit,
+        //offset: productFindFilters.offset,
+        //limit: productFindFilters.limit,
       },
     );
 
