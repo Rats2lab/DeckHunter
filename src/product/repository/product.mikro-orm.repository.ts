@@ -37,24 +37,15 @@ export class ProductMikroOrmRepository {
   ): Promise<ProductWithLeaderboards[]> {
     const foundProducts: ProductMikroOrm[] = await this.orm.em.find(
       ProductMikroOrm,
-      {},
+      {
+        leaderboards: { $eq: productFindFilters.leaderboardId },
+      },
       {
         populate: ['leaderboards'],
-        //offset: productFindFilters.offset,
-        //limit: productFindFilters.limit,
+        offset: productFindFilters.offset,
+        limit: productFindFilters.limit,
       },
     );
-
-    // TODO: Improve
-    if (productFindFilters.leaderboardId) {
-      return foundProducts
-        .map((product) => product.toDomain())
-        .filter((product) =>
-          product.leaderboards
-            .map((leaderboard) => leaderboard.id)
-            .includes(productFindFilters.leaderboardId),
-        );
-    }
 
     return foundProducts.map((product) => product.toDomain());
   }
