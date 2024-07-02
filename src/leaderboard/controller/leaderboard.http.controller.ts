@@ -83,7 +83,7 @@ export class LeaderboardHttpController {
     );
   }
 
-  @ApiCreatedResponse({
+  /*@ApiCreatedResponse({
     description: 'Leaderboard created',
     type: LeaderboardDto,
   })
@@ -116,5 +116,5 @@ export class LeaderboardHttpController {
       );
 
     return new LeaderboardDto(updatedLeaderboard);
-  }
+  }*/
 }

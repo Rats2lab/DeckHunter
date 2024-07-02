@@ -46,7 +46,7 @@ export class ProductHttpController {
     private readonly productSeedService: ProductSeedService,
   ) {}
 
-  @ApiCreatedResponse({
+  /*@ApiCreatedResponse({
     description: 'Product created',
     type: ProductDto,
   })
@@ -61,7 +61,8 @@ export class ProductHttpController {
     );
 
     return new ProductDto(createdProduct);
-  }
+  }*/
+
   @ApiCreatedResponse({
     description: 'Products seeded',
     type: ProductDto,
@@ -120,7 +121,7 @@ export class ProductHttpController {
     );
   }
 
-  @ApiOkResponse({
+  /*@ApiOkResponse({
     description: 'Product updated',
     type: ProductDto,
   })
@@ -136,5 +137,5 @@ export class ProductHttpController {
     );
 
     return new ProductDto(updatedProduct);
-  }
+  }*/
 }
