@@ -16,7 +16,7 @@ import { HttpModule } from '@nestjs/axios';
     GraphqlNestjsModule,
     forwardRef(() => ProductNestjsModule),
   ],
-  controllers: [ProductHuntProductHttpController],
+  controllers: [],
   providers: [
     ProductHuntCreateWebProductService,
     ProductHuntFindProductService,

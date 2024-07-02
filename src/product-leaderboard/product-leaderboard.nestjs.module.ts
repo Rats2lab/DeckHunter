@@ -10,7 +10,7 @@ import { ProductLeaderboardCreateManyService } from './service/product-leaderboa
 
 @Module({
   imports: [MikroOrmModule.forFeature([ProductLeaderboardMikroOrm])],
-  controllers: [ProductLeaderboardHttpController],
+  controllers: [],
   providers: [
     ProductLeaderboardCreateService,
     ProductLeaderboardFindAllService,
