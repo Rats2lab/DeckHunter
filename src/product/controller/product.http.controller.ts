@@ -10,6 +10,7 @@ import {
 } from '@nestjs/common';
 import {
   ApiBadRequestResponse,
+  ApiBearerAuth,
   ApiBody,
   ApiCreatedResponse,
   ApiForbiddenResponse,
@@ -51,6 +52,7 @@ export class ProductHttpController {
   })
   @ApiBody({ type: ProductCreateDto })
   @Post()
+  @ApiBearerAuth()
   async create(
     @Body() productCreateDto: ProductCreateDto,
   ): Promise<ProductDto> {
@@ -123,6 +125,7 @@ export class ProductHttpController {
     type: ProductDto,
   })
   @Patch(':id')
+  @ApiBearerAuth()
   async update(
     @Param('id', ParseUUIDPipe) id: string,
     @Body() productUpdateFields: ProductUpdateFieldsDto,
