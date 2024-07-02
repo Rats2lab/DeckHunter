@@ -8,6 +8,7 @@ import {
 } from '@nestjs/common';
 import {
   ApiBadRequestResponse,
+  ApiBearerAuth,
   ApiBody,
   ApiCreatedResponse,
   ApiForbiddenResponse,
@@ -22,6 +23,7 @@ import { ProductLeaderboardCreateService } from '../service/product-leaderboard.
 import { ProductLeaderboardFindAllService } from '../service/product-leaderboard.find-all.service';
 import { ProductLeaderboardFindOneService } from '../service/product-leaderboard.find-one.service';
 
+@ApiBearerAuth()
 @ApiForbiddenResponse({ description: 'Authorization is required' })
 @ApiBadRequestResponse({ description: 'Bad request' })
 @ApiTags('Product leaderboard')

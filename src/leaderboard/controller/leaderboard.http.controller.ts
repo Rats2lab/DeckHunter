@@ -10,6 +10,7 @@ import {
 } from '@nestjs/common';
 import {
   ApiBadRequestResponse,
+  ApiBearerAuth,
   ApiBody,
   ApiCreatedResponse,
   ApiForbiddenResponse,
@@ -88,6 +89,7 @@ export class LeaderboardHttpController {
   })
   @ApiBody({ type: LeaderboardCreateDto })
   @Post()
+  @ApiBearerAuth()
   async create(
     @Body() createLeaderboard: LeaderboardCreateDto,
   ): Promise<LeaderboardDto> {
@@ -102,6 +104,7 @@ export class LeaderboardHttpController {
     type: LeaderboardDto,
   })
   @Patch(':id')
+  @ApiBearerAuth()
   async update(
     @Param('id', ParseUUIDPipe) id: string,
     @Body() leaderboardUpdateFields: LeaderboardUpdateFieldsDto,

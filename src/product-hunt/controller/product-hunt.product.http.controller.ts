@@ -1,6 +1,7 @@
 import { Body, Controller, Post } from '@nestjs/common';
 import {
   ApiBadRequestResponse,
+  ApiBearerAuth,
   ApiBody,
   ApiCreatedResponse,
   ApiForbiddenResponse,
@@ -11,7 +12,7 @@ import { ProductHuntCreateWebProductService } from '../service/product-hunt.crea
 import { ProductDto } from '../../product/dto/product.dto';
 import { Product } from '../../product/interface/product.interface';
 
-//@ApiBearerAuth()
+@ApiBearerAuth()
 @ApiForbiddenResponse({ description: 'Authorization is required' })
 @ApiBadRequestResponse({ description: 'Bad request' })
 @ApiTags('Product Hunt: Product')
