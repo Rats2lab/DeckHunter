@@ -10,6 +10,7 @@ import mikroOrmConfig from '../mikro-orm.config';
 import { ProductProviderNestjsModule } from '../product-provider/product-provider.nestjs.module';
 import { ProductHuntNestjsModule } from '../product-hunt/product-hunt.nestjs.module';
 import { GraphqlNestjsModule } from '../graphql/graphql.nestjs.module';
+import { TelegramBotNestjsModule } from '../telegram-bot/telegram-bot.nestjs.module';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { GraphqlNestjsModule } from '../graphql/graphql.nestjs.module';
     GraphqlNestjsModule,
     ProductHuntNestjsModule,
     ProductProviderNestjsModule,
+    TelegramBotNestjsModule,
   ],
   providers: [
     {
