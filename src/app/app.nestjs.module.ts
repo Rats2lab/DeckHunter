@@ -11,6 +11,7 @@ import { ProductProviderNestjsModule } from '../product-provider/product-provide
 import { ProductHuntNestjsModule } from '../product-hunt/product-hunt.nestjs.module';
 import { GraphqlNestjsModule } from '../graphql/graphql.nestjs.module';
 import { TelegramBotNestjsModule } from '../telegram-bot/telegram-bot.nestjs.module';
+import { OpenAiNestjsModule } from '../open-ai/open-ai.nestjs.module';
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { TelegramBotNestjsModule } from '../telegram-bot/telegram-bot.nestjs.mod
     ProductHuntNestjsModule,
     ProductProviderNestjsModule,
     TelegramBotNestjsModule,
+    OpenAiNestjsModule,
   ],
   providers: [
     {
