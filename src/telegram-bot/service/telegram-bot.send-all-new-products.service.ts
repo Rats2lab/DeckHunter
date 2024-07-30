@@ -33,7 +33,7 @@ export class TelegramBotSendAllNewProductsService {
       iteration += 1;
     }
 
-    text += `\n\nDon't forget to visit our <a href="https://deck-hunter.vercel.app/">web</a> to see more details`;
+    text += `\n\nDon't forget to visit our <a href="https://deckhunter.rats2lab.com/">web</a> to see more details`;
 
     try {
       await this.telegramBotSendTextService.sendText({
