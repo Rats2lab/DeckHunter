@@ -26,14 +26,14 @@ export class TelegramBotSendAllNewProductsService {
     let iteration: number = 0;
 
     for (const product of sortedProducts) {
-      text += `\n\n${iteration + 1}.- <b>${product.title}</b>\n${
-        product.tagline
-      }\n > Link: ${product.link}`;
+      text += `\n\n${iteration + 1}.- <a href="${product.link}"><b>${
+        product.title
+      }</b></a>\n${product.tagline}`;
 
       iteration += 1;
     }
 
-    text += `\n\nDon't forget to visit our <a href="https://deckhunter.rats2lab.com/">web</a> to see more details`;
+    text += `\n\nDon't forget to visit our <a href="https://deckhunter.rats2lab.com/">web</a> to see more details 🐁`;
 
     try {
       await this.telegramBotSendTextService.sendText({
