@@ -4,7 +4,7 @@ import { OpenAiSendPromptService } from './service/open-ai.send-prompt.service';
 import { OpenAiHttpController } from './controller/open-ai.http.controller';
 
 @Module({
-  controllers: [OpenAiHttpController],
+  //controllers: [OpenAiHttpController],
   providers: [OpenAiRepository, OpenAiSendPromptService],
   exports: [OpenAiSendPromptService],
 })
