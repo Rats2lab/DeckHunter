@@ -11,7 +11,13 @@ import { AnthropicAiRole } from '../enum/anthropic-ai.completion-role.enum';
  */
 @Injectable()
 export class AnthropicAiRepository {
-  constructor(private readonly configService: ConfigService) {}
+  private anthropicAiClient: Anthropic;
+
+  constructor(private readonly configService: ConfigService) {
+    this.anthropicAiClient = new Anthropic({
+      apiKey: this.configService.getOrThrow<string>('ANTHROPIC_AI_APIKEY'),
+    });
+  }
 
   async createMessage(
     content: string,
@@ -23,11 +29,7 @@ export class AnthropicAiRepository {
       maxTokens: 1024,
     },
   ): Promise<string | undefined> {
-    const anthropicAi: Anthropic = new Anthropic({
-      apiKey: this.configService.getOrThrow<string>('ANTHROPIC_AI_APIKEY'),
-    });
-
-    const message: Message = await anthropicAi.messages.create({
+    const message: Message = await this.anthropicAiClient.messages.create({
       max_tokens: config.maxTokens,
       messages: [{ role: AnthropicAiRole.USER, content }],
       model: config.model,

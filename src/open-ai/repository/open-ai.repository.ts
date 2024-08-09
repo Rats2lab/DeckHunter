@@ -10,7 +10,13 @@ import { OpenAiModel } from '../enum/open-ai.model.enum';
  */
 @Injectable()
 export class OpenAiRepository {
-  constructor(private readonly configService: ConfigService) {}
+  private openAiClient: OpenAI;
+
+  constructor(private readonly configService: ConfigService) {
+    this.openAiClient = new OpenAI({
+      apiKey: this.configService.getOrThrow<string>('ANTHROPIC_AI_APIKEY'),
+    });
+  }
 
   async createChatCompletion(
     content: string,
@@ -26,12 +32,8 @@ export class OpenAiRepository {
       maxTokens: 4096,
     },
   ): Promise<string | undefined> {
-    const openAi: OpenAI = new OpenAI({
-      apiKey: this.configService.getOrThrow<string>('OPEN_AI_APIKEY'),
-    });
-
     const chatCompletionResponse: OpenAI.Chat.ChatCompletion =
-      await openAi.chat.completions.create({
+      await this.openAiClient.chat.completions.create({
         model: config.model,
         messages: [
           {
