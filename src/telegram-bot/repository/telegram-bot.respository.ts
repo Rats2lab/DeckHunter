@@ -17,6 +17,7 @@ export class TelegramBotRepository {
         {
           chat_id: sendTextParameters.chatId,
           text: sendTextParameters.text,
+          disable_web_page_preview: true,
         },
       ),
     );
