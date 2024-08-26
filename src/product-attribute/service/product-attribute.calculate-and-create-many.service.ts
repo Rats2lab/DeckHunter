@@ -5,7 +5,7 @@ import { ProductPromptCreateAttributes } from '../../product/type/product.prompt
 import { AnthropicAiSendMessageService } from '../../anthropic-ai/service/anthropic-ai.send-message.service';
 import { AnthropicAiSendMessageResponse } from '../../anthropic-ai/interface/anthropic-ai.send-message-response.interface';
 import { ProductAttributeCreateManyService } from './product-attribute.create-many.service';
-import { ProductAttributeCreateManyPromptsToCreateAttributesService } from './product-attribute.create-many-prompts-to-create-attributes.service';
+import { ProductAttributeCreatePromptToCreateAttributesService } from './product-attribute.create-prompt-to-create-attributes.service';
 import { ProductAttributeCreate } from '../type/product-attribute.create.type';
 import { ProductAttributeCreateAiResponse } from '../interface/product-attribute.create-ai-response.interface';
 import { ProductAttributeProvider } from '../enum/product-attribute.provider.enum';
@@ -15,45 +15,44 @@ export class ProductAttributeCalculateAndCreateManyService {
   constructor(
     private readonly anthropicAiSendMessageService: AnthropicAiSendMessageService,
     private readonly productAttributeCreateManyService: ProductAttributeCreateManyService,
-    private readonly productAttributeCreateManyPromptsToCreateAttributesService: ProductAttributeCreateManyPromptsToCreateAttributesService,
+    private readonly productAttributeCreateManyPromptsToCreateAttributesService: ProductAttributeCreatePromptToCreateAttributesService,
   ) {}
 
   async createMany(
     productsWithoutAttributes: ProductPromptCreateAttributes[],
   ): Promise<ProductAttribute[]> {
-    const generatedPrompts: string[] =
-      await this.productAttributeCreateManyPromptsToCreateAttributesService.createManyPrompts(
-        productsWithoutAttributes,
-      );
-
     let createdProductAttributes: ProductAttribute[] = [];
-    for (let prompt of generatedPrompts) {
-      try {
-        const aiResponse: AnthropicAiSendMessageResponse =
-          await this.anthropicAiSendMessageService.sendMessage({
-            content: prompt,
-          });
+    for (let productWithoutAttributes of productsWithoutAttributes) {
+      const generatedPrompt: string =
+        await this.productAttributeCreateManyPromptsToCreateAttributesService.createPrompt(
+          productWithoutAttributes,
+        );
 
-        const productAttributesCreate: ProductAttributeCreate[] =
-          this.proccessAiResponse(aiResponse);
+      const aiResponse: AnthropicAiSendMessageResponse =
+        await this.anthropicAiSendMessageService.sendMessage({
+          content: generatedPrompt,
+        });
 
-        if (productAttributesCreate.length) {
-          const chunkCreatedProductAttributes: ProductAttribute[] =
-            await this.productAttributeCreateManyService.createMany(
-              productAttributesCreate,
-            );
+      const productAttributesCreate: ProductAttributeCreate[] =
+        this.proccessAiResponse(productWithoutAttributes, aiResponse);
 
-          createdProductAttributes = createdProductAttributes.concat(
-            chunkCreatedProductAttributes,
+      if (productAttributesCreate.length) {
+        const chunkCreatedProductAttributes: ProductAttribute[] =
+          await this.productAttributeCreateManyService.createMany(
+            productAttributesCreate,
           );
-        }
-      } catch (_ignoredException) {}
+
+        createdProductAttributes = createdProductAttributes.concat(
+          chunkCreatedProductAttributes,
+        );
+      }
     }
 
     return createdProductAttributes;
   }
 
   private proccessAiResponse(
+    productWithoutAttributes: ProductPromptCreateAttributes,
     aiResponse: AnthropicAiSendMessageResponse,
   ): ProductAttributeCreate[] {
     try {
@@ -62,8 +61,8 @@ export class ProductAttributeCalculateAndCreateManyService {
       );
 
       return processedResponse.map((productAttributeCreate) => ({
-        productId: productAttributeCreate.productId,
-        attributeName: productAttributeCreate.attributeName,
+        productId: productWithoutAttributes.id,
+        attributeName: productAttributeCreate.attribute,
         provider: ProductAttributeProvider.ANTHROPIC_AI,
         processedOutput: productAttributeCreate.output,
       }));

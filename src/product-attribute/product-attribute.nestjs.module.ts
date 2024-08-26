@@ -7,7 +7,7 @@ import { ProductAttributeCalculateAndCreateManyService } from './service/product
 import { ProductAttributeCountService } from './service/product-attribute.count.service';
 import { ProductAttributeCreateManyService } from './service/product-attribute.create-many.service';
 import { ProductAttributeCreateService } from './service/product-attribute.create.service';
-import { ProductAttributeCreateManyPromptsToCreateAttributesService } from './service/product-attribute.create-many-prompts-to-create-attributes.service';
+import { ProductAttributeCreatePromptToCreateAttributesService } from './service/product-attribute.create-prompt-to-create-attributes.service';
 
 @Module({
   imports: [
@@ -20,7 +20,7 @@ import { ProductAttributeCreateManyPromptsToCreateAttributesService } from './se
     ProductAttributeCreateService,
     ProductAttributeCalculateAndCreateManyService,
     ProductAttributeCreateManyService,
-    ProductAttributeCreateManyPromptsToCreateAttributesService,
+    ProductAttributeCreatePromptToCreateAttributesService,
   ],
   exports: [
     ProductAttributeCountService,

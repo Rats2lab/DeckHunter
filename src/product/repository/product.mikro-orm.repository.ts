@@ -26,7 +26,7 @@ export class ProductMikroOrmRepository {
     const foundProduct: ProductMikroOrm | null = await this.orm.em.findOne(
       ProductMikroOrm,
       productFindOneFilters,
-      { populate: ['leaderboards'] },
+      { populate: ['leaderboards', 'attributes'] },
     );
 
     return foundProduct ? foundProduct.toDomain() : undefined;
@@ -41,7 +41,7 @@ export class ProductMikroOrmRepository {
         leaderboards: { $eq: productFindFilters.leaderboardId },
       },
       {
-        populate: ['leaderboards'],
+        populate: ['leaderboards', 'attributes'],
         offset: productFindFilters.offset,
         limit: productFindFilters.limit,
       },
