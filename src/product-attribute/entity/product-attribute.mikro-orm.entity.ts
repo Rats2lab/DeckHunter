@@ -37,11 +37,6 @@ export class ProductAttributeMikroOrm implements ProductAttribute {
   provider: ProductAttributeProvider;
 
   @Property({
-    length: 1500,
-  })
-  rawOutput: string;
-
-  @Property({
     length: 500,
   })
   processedOutput: string;
@@ -65,7 +60,6 @@ export class ProductAttributeMikroOrm implements ProductAttribute {
       productId: this.productId,
       attributeName: this.attributeName,
       provider: this.provider,
-      rawOutput: this.rawOutput,
       processedOutput: this.processedOutput,
     };
   }

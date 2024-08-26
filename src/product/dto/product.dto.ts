@@ -3,12 +3,11 @@ import { Exclude } from 'class-transformer';
 import { InfrastructureObject } from '../../common/infrastructure.object.type';
 import { LeaderboardDto } from '../../leaderboard/dto/leaderboard.dto';
 import { Product } from '../interface/product.interface';
-import { ProductWithLeaderboards } from '../interface/product.with-leaderboards.interface';
+import { ProductWithRelations } from '../interface/product.with-relations.interface';
 import { ProductProviderName } from '../../product-provider/enum/product-provider.name.enum';
+import { ProductAttributeDto } from '../../product-attribute/dto/product-attribute.dto';
 
-export class ProductDto
-  implements InfrastructureObject<ProductWithLeaderboards>
-{
+export class ProductDto implements InfrastructureObject<ProductWithRelations> {
   @ApiProperty()
   id: string;
 
@@ -42,6 +41,9 @@ export class ProductDto
   @ApiProperty({ type: LeaderboardDto, isArray: true })
   leaderboards: LeaderboardDto[];
 
+  @ApiProperty({ type: ProductAttributeDto, isArray: true })
+  attributes: ProductAttributeDto[];
+
   @ApiProperty({ enum: ProductProviderName })
   @Exclude()
   provider: ProductProviderName;
@@ -50,7 +52,7 @@ export class ProductDto
     Object.assign(this, product);
   }
 
-  toDomain(): ProductWithLeaderboards {
+  toDomain(): ProductWithRelations {
     return {
       id: this.id,
       providerExternalId: this.providerExternalId,
@@ -66,6 +68,7 @@ export class ProductDto
       leaderboards: this.leaderboards.map((leaderboard) =>
         leaderboard.toDomain(),
       ),
+      attributes: this.attributes.map((attribute) => attribute.toDomain()),
     };
   }
 }

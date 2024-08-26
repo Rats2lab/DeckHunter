@@ -26,7 +26,7 @@ export class AnthropicAiRepository {
       maxTokens: number;
     } = {
       model: AnthropicAiModel.CLAUDE_3_5_SONNET,
-      maxTokens: 1024,
+      maxTokens: 5000,
     },
   ): Promise<string | undefined> {
     const message: Message = await this.anthropicAiClient.messages.create({

@@ -25,7 +25,7 @@ import { ProductFindFiltersDto } from '../dto/product.find-filters.dto';
 import { ProductSeedDto } from '../dto/product.seed.dto';
 import { ProductUpdateFieldsDto } from '../dto/product.update-fields.dto';
 import { Product } from '../interface/product.interface';
-import { ProductWithLeaderboards } from '../interface/product.with-leaderboards.interface';
+import { ProductWithRelations } from '../interface/product.with-relations.interface';
 import { ProductCreateService } from '../service/product.create.service';
 import { ProductFindAllService } from '../service/product.find-all.service';
 import { ProductFindOneService } from '../service/product.find-one.service';
@@ -92,7 +92,7 @@ export class ProductHttpController {
     @Query('language')
     language: string,
   ): Promise<ProductDto> {
-    const foundProduct: ProductWithLeaderboards =
+    const foundProduct: ProductWithRelations =
       await this.productFindOneService.findOne({
         id,
       });
@@ -111,7 +111,7 @@ export class ProductHttpController {
   async find(
     @Query() productFindFiltersDto: ProductFindFiltersDto,
   ): Promise<PaginableResponseDto<ProductDto>> {
-    const foundProducts: ProductWithLeaderboards[] =
+    const foundProducts: ProductWithRelations[] =
       await this.productFindAllService.findAll(
         productFindFiltersDto.toDomain(),
       );

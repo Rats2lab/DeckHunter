@@ -30,7 +30,7 @@ export class ProductAttributeCreateManyPromptsToCreateAttributesService {
 
       const lastIteration: boolean = i === productsWithoutAttributes.length - 1;
       const hasToCreatePrompt: boolean =
-        (i % productBodyLimit === 0 && i !== 0) || lastIteration;
+        i % productBodyLimit !== 0 || lastIteration;
 
       productBodyContent += `\n- ${productWithoutAttributes.id}: ${productWithoutAttributes.tagline} -> ${productWithoutAttributes.description}`;
 

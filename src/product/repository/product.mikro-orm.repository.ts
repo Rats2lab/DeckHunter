@@ -7,7 +7,7 @@ import { Injectable } from '@nestjs/common';
 import { DateTime } from 'luxon';
 import { v4 } from 'uuid';
 import { ProductMikroOrm } from '../entity/product.mikro-orm.entity';
-import { ProductWithLeaderboards } from '../interface/product.with-leaderboards.interface';
+import { ProductWithRelations } from '../interface/product.with-relations.interface';
 import { ProductCreate } from '../type/product.create.type';
 import { ProductFindOneFilters } from '../type/product.find-one-filters.type';
 import { ProductUpdateFields } from '../type/product.update-fields.type';
@@ -22,7 +22,7 @@ export class ProductMikroOrmRepository {
   @CreateRequestContext()
   async findOne(
     productFindOneFilters: ProductFindOneFilters,
-  ): Promise<ProductWithLeaderboards | undefined> {
+  ): Promise<ProductWithRelations | undefined> {
     const foundProduct: ProductMikroOrm | null = await this.orm.em.findOne(
       ProductMikroOrm,
       productFindOneFilters,
@@ -34,7 +34,7 @@ export class ProductMikroOrmRepository {
   @CreateRequestContext()
   async findAll(
     productFindFilters: ProductFindFilters,
-  ): Promise<ProductWithLeaderboards[]> {
+  ): Promise<ProductWithRelations[]> {
     const foundProducts: ProductMikroOrm[] = await this.orm.em.find(
       ProductMikroOrm,
       {

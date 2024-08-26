@@ -6,6 +6,5 @@ export interface ProductAttribute {
   productId: string;
   attributeName: ProductAttributeName;
   provider: ProductAttributeProvider;
-  rawOutput: string;
   processedOutput: string;
 }

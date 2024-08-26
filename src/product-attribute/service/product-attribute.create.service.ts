@@ -12,13 +12,9 @@ export class ProductAttributeCreateService {
   async create(
     productAttributeCreate: ProductAttributeCreate,
   ): Promise<ProductAttribute | undefined> {
-    try {
-      const createdProductAttribute: ProductAttribute =
-        await this.productAttributeRepository.insert(productAttributeCreate);
+    const createdProductAttribute: ProductAttribute =
+      await this.productAttributeRepository.insert(productAttributeCreate);
 
-      return createdProductAttribute;
-    } catch (_ignoredException) {
-      return undefined;
-    }
+    return createdProductAttribute;
   }
 }

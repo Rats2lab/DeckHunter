@@ -10,7 +10,7 @@ import { ProductProviderGetLeaderboardLinkService } from '../../product-provider
 import { TelegramBotSendAllNewProductsService } from '../../telegram-bot/service/telegram-bot.send-all-new-products.service';
 import { Product } from '../interface/product.interface';
 import { ProductSeedParams } from '../interface/product.seed-params.interface';
-import { ProductWithLeaderboards } from '../interface/product.with-leaderboards.interface';
+import { ProductWithRelations } from '../interface/product.with-relations.interface';
 import { ProductCreate } from '../type/product.create.type';
 import { ProductCreateManyService } from './product.create-many.service';
 import { ProductFindAllService } from './product.find-all.service';
@@ -30,7 +30,7 @@ export class ProductSeedService {
 
   async seed(
     productSeedParams: ProductSeedParams,
-  ): Promise<ProductWithLeaderboards[]> {
+  ): Promise<ProductWithRelations[]> {
     // TODO: Store generic leaderboards and provider leaderboards
 
     const leaderboardLink: string =

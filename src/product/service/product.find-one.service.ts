@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { ProductWithLeaderboards } from '../interface/product.with-leaderboards.interface';
+import { ProductWithRelations } from '../interface/product.with-relations.interface';
 import { ProductMikroOrmRepository } from '../repository/product.mikro-orm.repository';
 import { ProductFindOneFilters } from '../type/product.find-one-filters.type';
 
@@ -9,7 +9,7 @@ export class ProductFindOneService {
 
   async findOne(
     productFindOneFilters: ProductFindOneFilters,
-  ): Promise<ProductWithLeaderboards> {
+  ): Promise<ProductWithRelations> {
     return this.productRepository.findOne(productFindOneFilters);
   }
 }

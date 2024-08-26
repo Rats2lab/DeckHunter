@@ -16,12 +16,14 @@ export class ProductAttributeCreateManyService {
 
     for (let productAttributeCreate of productAttributesCreate) {
       try {
-        const createdAttribute: ProductAttribute =
+        const createdAttribute: ProductAttribute | undefined =
           await this.productAttributeCreateService.create(
             productAttributeCreate,
           );
 
-        createdProductAttributes.push(createdAttribute);
+        if (createdAttribute) {
+          createdProductAttributes.push(createdAttribute);
+        }
       } catch (_ignoredException) {}
     }
 

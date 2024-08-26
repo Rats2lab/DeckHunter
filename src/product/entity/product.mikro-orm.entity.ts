@@ -6,6 +6,7 @@ import {
   Entity,
   Enum,
   ManyToMany,
+  OneToMany,
   PrimaryKey,
   Property,
   Unique,
@@ -13,8 +14,9 @@ import {
 import { Product } from '../interface/product.interface';
 import { LeaderboardMikroOrm } from '../../leaderboard/entity/leaderboard.mikro-orm.entity';
 import { ProductLeaderboardMikroOrm } from '../../product-leaderboard/entity/product-leaderboard.mikro-orm.entity';
-import { ProductWithLeaderboards } from '../interface/product.with-leaderboards.interface';
+import { ProductWithRelations } from '../interface/product.with-relations.interface';
 import { ProductProviderName } from '../../product-provider/enum/product-provider.name.enum';
+import { ProductAttributeMikroOrm } from '../../product-attribute/entity/product-attribute.mikro-orm.entity';
 
 @Unique({ properties: ['providerExternalId', 'provider'] })
 @Entity({ tableName: 'product' })
@@ -76,6 +78,12 @@ export class ProductMikroOrm implements Product {
   })
   leaderboards: Collection<LeaderboardMikroOrm>;
 
+  @OneToMany(
+    () => ProductAttributeMikroOrm,
+    (permissionOverride) => permissionOverride.productId,
+  )
+  attributes: Collection<ProductAttributeMikroOrm>;
+
   @Enum({ items: () => ProductProviderName })
   provider: ProductProviderName;
 
@@ -92,7 +100,7 @@ export class ProductMikroOrm implements Product {
   updatedAt: Date;
 
   @Property({ persist: false, hidden: true })
-  toDomain(): ProductWithLeaderboards {
+  toDomain(): ProductWithRelations {
     return {
       id: this.id,
       providerExternalId: this.providerExternalId,
@@ -107,6 +115,9 @@ export class ProductMikroOrm implements Product {
       provider: this.provider,
       leaderboards: this.leaderboards.isInitialized()
         ? this.leaderboards.getItems()
+        : [],
+      attributes: this.attributes.isInitialized()
+        ? this.attributes.getItems()
         : [],
     };
   }

@@ -65,7 +65,6 @@ export class ProductAttributeCalculateAndCreateManyService {
         productId: productAttributeCreate.productId,
         attributeName: productAttributeCreate.attributeName,
         provider: ProductAttributeProvider.ANTHROPIC_AI,
-        rawOutput: aiResponse.response,
         processedOutput: productAttributeCreate.output,
       }));
     } catch (_ignoredException) {}
