@@ -5,7 +5,6 @@ import {
   DateType,
   Entity,
   Enum,
-  Index,
   ManyToMany,
   PrimaryKey,
   Property,
