@@ -1,3 +1,3 @@
 import { ProductAttribute } from '../interface/product-attribute.interface';
 
-export type ProductCalculatedAttributeCreate = Omit<ProductAttribute, 'id'>;
+export type ProductAttributeCreate = Omit<ProductAttribute, 'id'>;

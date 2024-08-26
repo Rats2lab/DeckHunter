@@ -14,6 +14,7 @@ import { ProductSeedService } from './service/product.seed.service';
 import { ProductLeaderboardNestjsModule } from '../product-leaderboard/product-leaderboard.nestjs.module';
 import { ProductCreateIfNotExistsService } from './service/product.create-if-not-exists.service';
 import { TelegramBotNestjsModule } from '../telegram-bot/telegram-bot.nestjs.module';
+import { ProductAttributeNestjsModule } from '../product-attribute/product-attribute.nestjs.module';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { TelegramBotNestjsModule } from '../telegram-bot/telegram-bot.nestjs.mod
     LeaderboardNestjsModule,
     ProductLeaderboardNestjsModule,
     TelegramBotNestjsModule,
+    ProductAttributeNestjsModule,
   ],
   controllers: [ProductHttpController],
   providers: [

@@ -4,7 +4,7 @@ import { AnthropicAiSendMessageService } from './service/anthropic-ai.send-messa
 import { AnthropicAiHttpController } from './controller/anthropic-ai.http.controller';
 
 @Module({
-  controllers: [AnthropicAiHttpController],
+  //controllers: [AnthropicAiHttpController],
   providers: [AnthropicAiRepository, AnthropicAiSendMessageService],
   exports: [AnthropicAiSendMessageService],
 })

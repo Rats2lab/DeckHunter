@@ -13,14 +13,8 @@ export class AnthropicAiSendMessageService {
     const aiResponse: string | undefined =
       await this.anthropicAiRepository.createMessage(sendMessage.content);
 
-    if (aiResponse) {
-      return {
-        response: aiResponse,
-      };
-    }
-
     return {
-      response: '',
+      response: aiResponse,
     };
   }
 }
