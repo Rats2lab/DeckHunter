@@ -16,14 +16,6 @@ RUN yarn install --ignore-optional --frozen-lockfile
 
 FROM default AS development
 
-COPY .env.dev .env
+COPY .env .env
 
 CMD yarn run start:dev
-
-# ---
-
-FROM default AS test
-
-COPY .env.test .env
-
-CMD yarn run start:debug

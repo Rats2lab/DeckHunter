@@ -9,8 +9,7 @@ $ npm install -g yarn
 # Preparación del entorno
 
 ```bash
-$ cp .env.example .env.dev
-$ cp .env.example .env.test
+$ cp .env.example .env
 ```
 
 Se requiere añadir valor a todas las variables contenidas en estos dos ficheros.
@@ -20,44 +19,16 @@ $ yarn install
 $ yarn build
 ```
 
-## Start
-
-# Entorno local
+## Start entorno local
 
 ```bash
-$ yarn docker:dev:up
+$ yarn docker:up
 ```
 
-# Entorno de test
-
-```bash
-$ yarn docker:test:up
-```
-
-# Ambos entornos
-
-```bash
-$ yarn compose:up
-```
-
-## Stop
-
-# Entorno local
+## Stop entorno local
 
 ```bash
 $ yarn docker:dev:down
-```
-
-# Entorno de test
-
-```bash
-$ yarn docker:test:down
-```
-
-# Ambos entornos
-
-```bash
-$ yarn compose:down
 ```
 
 ## Ejecución de tests
