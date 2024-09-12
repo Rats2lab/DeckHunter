@@ -23,29 +23,31 @@ export class ProductAttributeCalculateAndCreateManyService {
   ): Promise<ProductAttribute[]> {
     let createdProductAttributes: ProductAttribute[] = [];
     for (let productWithoutAttributes of productsWithoutAttributes) {
-      const generatedPrompt: string =
-        await this.productAttributeCreateManyPromptsToCreateAttributesService.createPrompt(
-          productWithoutAttributes,
-        );
-
-      const aiResponse: AnthropicAiSendMessageResponse =
-        await this.anthropicAiSendMessageService.sendMessage({
-          content: generatedPrompt,
-        });
-
-      const productAttributesCreate: ProductAttributeCreate[] =
-        this.proccessAiResponse(productWithoutAttributes, aiResponse);
-
-      if (productAttributesCreate.length) {
-        const chunkCreatedProductAttributes: ProductAttribute[] =
-          await this.productAttributeCreateManyService.createMany(
-            productAttributesCreate,
+      try {
+        const generatedPrompt: string =
+          await this.productAttributeCreateManyPromptsToCreateAttributesService.createPrompt(
+            productWithoutAttributes,
           );
 
-        createdProductAttributes = createdProductAttributes.concat(
-          chunkCreatedProductAttributes,
-        );
-      }
+        const aiResponse: AnthropicAiSendMessageResponse =
+          await this.anthropicAiSendMessageService.sendMessage({
+            content: generatedPrompt,
+          });
+
+        const productAttributesCreate: ProductAttributeCreate[] =
+          this.proccessAiResponse(productWithoutAttributes, aiResponse);
+
+        if (productAttributesCreate.length) {
+          const chunkCreatedProductAttributes: ProductAttribute[] =
+            await this.productAttributeCreateManyService.createMany(
+              productAttributesCreate,
+            );
+
+          createdProductAttributes = createdProductAttributes.concat(
+            chunkCreatedProductAttributes,
+          );
+        }
+      } catch (_ignoredException) {}
     }
 
     return createdProductAttributes;

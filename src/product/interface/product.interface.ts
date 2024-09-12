@@ -1,4 +1,3 @@
-import { ProductAttribute } from '../../product-attribute/interface/product-attribute.interface';
 import { ProductProviderName } from '../../product-provider/enum/product-provider.name.enum';
 
 export interface Product {
