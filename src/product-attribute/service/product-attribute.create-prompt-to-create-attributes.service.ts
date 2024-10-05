@@ -11,7 +11,7 @@ export class ProductAttributeCreatePromptToCreateAttributesService {
       Object.values(ProductAttributeName),
     );
 
-    const bodyTag: string = '#BODY#';
+    const bodyTag = '#BODY#';
     const basePrompt: string =
       `Eres un experto en hacer "pitch deck" de startups.` +
       ` Aporta información para cada uno de los "attribute"` +
@@ -19,7 +19,7 @@ export class ProductAttributeCreatePromptToCreateAttributesService {
       `No más de dos frases por atributo. Que tu respuesta sea única y exclusivamente un JSON en inglés con el formato:` +
       ` [{"attribute":"","output":""}]`;
 
-    const productBodyContent: string = `\n- ${productWithoutAttributes.tagline} -> ${productWithoutAttributes.description}`;
+    const productBodyContent = `\n- ${productWithoutAttributes.tagline} -> ${productWithoutAttributes.description}`;
 
     return basePrompt.replace(bodyTag, productBodyContent);
   }

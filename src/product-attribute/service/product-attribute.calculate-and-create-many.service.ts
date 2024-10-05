@@ -22,7 +22,7 @@ export class ProductAttributeCalculateAndCreateManyService {
     productsWithoutAttributes: ProductPromptCreateAttributes[],
   ): Promise<ProductAttribute[]> {
     let createdProductAttributes: ProductAttribute[] = [];
-    for (let productWithoutAttributes of productsWithoutAttributes) {
+    for (const productWithoutAttributes of productsWithoutAttributes) {
       try {
         const generatedPrompt: string =
           await this.productAttributeCreateManyPromptsToCreateAttributesService.createPrompt(

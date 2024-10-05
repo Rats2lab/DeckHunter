@@ -14,7 +14,7 @@ export class ProductAttributeCreateManyService {
   ): Promise<ProductAttribute[]> {
     const createdProductAttributes: ProductAttribute[] = [];
 
-    for (let productAttributeCreate of productAttributesCreate) {
+    for (const productAttributeCreate of productAttributesCreate) {
       try {
         const createdAttribute: ProductAttribute | undefined =
           await this.productAttributeCreateService.create(
