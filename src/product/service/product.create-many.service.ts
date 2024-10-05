@@ -18,7 +18,7 @@ export class ProductCreateManyService {
     const createdProducts: Product[] = [];
     const productWithoutAttributes: ProductPromptCreateAttributes[] = [];
 
-    for (let productCreate of productsCreate) {
+    for (const productCreate of productsCreate) {
       const createdProduct: Product =
         await this.productCreateIfNotExistsService.createIfNotExists(
           productCreate,

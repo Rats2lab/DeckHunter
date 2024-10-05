@@ -14,6 +14,7 @@ import { TelegramBotNestjsModule } from '../telegram-bot/telegram-bot.nestjs.mod
 import { OpenAiNestjsModule } from '../open-ai/open-ai.nestjs.module';
 import { AnthropicAiNestjsModule } from '../anthropic-ai/anthropic-ai.nestjs.module';
 import { ProductAttributeNestjsModule } from '../product-attribute/product-attribute.nestjs.module';
+import { OllamaNestjsModule } from '../ollama/ollama.nestjs.module';
 
 @Module({
   imports: [
@@ -33,6 +34,7 @@ import { ProductAttributeNestjsModule } from '../product-attribute/product-attri
     OpenAiNestjsModule,
     AnthropicAiNestjsModule,
     ProductAttributeNestjsModule,
+    OllamaNestjsModule,
   ],
   providers: [
     {

@@ -1,6 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { InfrastructureObject } from '../../common/infrastructure.object.type';
-import { Leaderboard } from '../interface/leaderboard.interface';
 import { LeaderboardCreate } from '../type/leaderboard.create.type';
 
 export class LeaderboardCreateDto
@@ -12,7 +11,7 @@ export class LeaderboardCreateDto
   @ApiProperty()
   link: string;
 
-  constructor(leaderboard: Leaderboard) {
+  constructor(leaderboard: LeaderboardCreate) {
     Object.assign(this, leaderboard);
   }
 

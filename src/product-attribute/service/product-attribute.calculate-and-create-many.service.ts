@@ -1,19 +1,18 @@
 import { Injectable } from '@nestjs/common';
-import { ProductAttribute } from '../interface/product-attribute.interface';
-import { Product } from '../../product/interface/product.interface';
-import { ProductPromptCreateAttributes } from '../../product/type/product.prompt-create-attributes.type';
-import { AnthropicAiSendMessageService } from '../../anthropic-ai/service/anthropic-ai.send-message.service';
 import { AnthropicAiSendMessageResponse } from '../../anthropic-ai/interface/anthropic-ai.send-message-response.interface';
+import { OllamaSendMessageService } from '../../ollama/service/ollama.send-message.service';
+import { ProductPromptCreateAttributes } from '../../product/type/product.prompt-create-attributes.type';
+import { ProductAttributeProvider } from '../enum/product-attribute.provider.enum';
+import { ProductAttributeCreateAiResponse } from '../interface/product-attribute.create-ai-response.interface';
+import { ProductAttribute } from '../interface/product-attribute.interface';
+import { ProductAttributeCreate } from '../type/product-attribute.create.type';
 import { ProductAttributeCreateManyService } from './product-attribute.create-many.service';
 import { ProductAttributeCreatePromptToCreateAttributesService } from './product-attribute.create-prompt-to-create-attributes.service';
-import { ProductAttributeCreate } from '../type/product-attribute.create.type';
-import { ProductAttributeCreateAiResponse } from '../interface/product-attribute.create-ai-response.interface';
-import { ProductAttributeProvider } from '../enum/product-attribute.provider.enum';
 
 @Injectable()
 export class ProductAttributeCalculateAndCreateManyService {
   constructor(
-    private readonly anthropicAiSendMessageService: AnthropicAiSendMessageService,
+    private readonly ollamaSendMessageService: OllamaSendMessageService,
     private readonly productAttributeCreateManyService: ProductAttributeCreateManyService,
     private readonly productAttributeCreateManyPromptsToCreateAttributesService: ProductAttributeCreatePromptToCreateAttributesService,
   ) {}
@@ -22,7 +21,7 @@ export class ProductAttributeCalculateAndCreateManyService {
     productsWithoutAttributes: ProductPromptCreateAttributes[],
   ): Promise<ProductAttribute[]> {
     let createdProductAttributes: ProductAttribute[] = [];
-    for (let productWithoutAttributes of productsWithoutAttributes) {
+    for (const productWithoutAttributes of productsWithoutAttributes) {
       try {
         const generatedPrompt: string =
           await this.productAttributeCreateManyPromptsToCreateAttributesService.createPrompt(
@@ -30,7 +29,7 @@ export class ProductAttributeCalculateAndCreateManyService {
           );
 
         const aiResponse: AnthropicAiSendMessageResponse =
-          await this.anthropicAiSendMessageService.sendMessage({
+          await this.ollamaSendMessageService.sendMessage({
             content: generatedPrompt,
           });
 
@@ -59,17 +58,21 @@ export class ProductAttributeCalculateAndCreateManyService {
   ): ProductAttributeCreate[] {
     try {
       const processedResponse: ProductAttributeCreateAiResponse[] = JSON.parse(
-        aiResponse.response,
+        this.cleanResponseBeforeParse(aiResponse.response),
       );
 
       return processedResponse.map((productAttributeCreate) => ({
         productId: productWithoutAttributes.id,
         attributeName: productAttributeCreate.attribute,
-        provider: ProductAttributeProvider.ANTHROPIC_AI,
+        provider: ProductAttributeProvider.OLLAMA,
         processedOutput: productAttributeCreate.output,
       }));
     } catch (_ignoredException) {}
 
     return [];
+  }
+
+  private cleanResponseBeforeParse(response: string): string {
+    return response.replace('```json', '').replace('```', '');
   }
 }
