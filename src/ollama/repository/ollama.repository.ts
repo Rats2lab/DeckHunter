@@ -16,7 +16,7 @@ export class OllamaRepository {
 
   async createMessage(
     content: string,
-    model: OllamaModel = OllamaModel.QWEN2_5_05B,
+    model: string = OllamaModel.QWEN2_5_05B,
   ): Promise<string> {
     const response: ChatResponse = await this.ollamaClient.chat({
       model: model,

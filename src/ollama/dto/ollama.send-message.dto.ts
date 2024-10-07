@@ -9,8 +9,8 @@ export class OllamaSendMessageDto
   @ApiProperty()
   content: string;
 
-  @ApiProperty({ enum: OllamaModel })
-  model: OllamaModel;
+  @ApiProperty()
+  model: string;
 
   constructor(sendMessage: OllamaSendMessage) {
     Object.assign(this, sendMessage);
