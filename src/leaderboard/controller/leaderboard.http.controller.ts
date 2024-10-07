@@ -29,6 +29,7 @@ import { LeaderboardUpdateService } from '../service/leaderboard.update.service'
 import { LeaderboardFindFiltersDto } from '../dto/leaderboard.find-filters.dto';
 import { LeaderboardFindService } from '../service/leaderboard.find.service';
 import { PaginableResponseDto } from '../../common/paginable.response.dto';
+import { AiProviderSendMessageService } from '../../ai-provider/service/ai-provider.send-message.service';
 
 @ApiForbiddenResponse({ description: 'Authorization is required' })
 @ApiBadRequestResponse({ description: 'Bad request' })
@@ -40,6 +41,7 @@ export class LeaderboardHttpController {
     private readonly leaderboardFindService: LeaderboardFindService,
     private readonly leaderboardCreateService: LeaderboardCreateService,
     private readonly leaderboardUpdateService: LeaderboardUpdateService,
+    private readonly aiProviderSendMessageService: AiProviderSendMessageService,
   ) {}
 
   @ApiOkResponse({
@@ -77,6 +79,8 @@ export class LeaderboardHttpController {
       await this.leaderboardFindService.find(
         leaderboardFindOneFiltersDto.toDomain(),
       );
+
+    console.log(this.aiProviderSendMessageService);
 
     return new PaginableResponseDto(
       foundLeaderboards.map((leaderboard) => new LeaderboardDto(leaderboard)),
