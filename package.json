@@ -47,6 +47,7 @@
     "axios": "^1.7.2",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.1",
+    "google-auth-library": "^9.14.1",
     "luxon": "^3.4.4",
     "ollama": "^0.5.9",
     "openai": "^4.53.2",
