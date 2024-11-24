@@ -5,12 +5,12 @@ RUN apk add --no-cache build-base python3
 WORKDIR /usr/src/app
 
 COPY package.json .
-COPY yarn.lock .
+COPY package-lock.json .
 
 RUN chown -R node:node /usr/src/app \
 	&& chown -R node:node /home/node
 
-RUN yarn install --ignore-optional --frozen-lockfile
+RUN npm install --only=prod
 
 # ---
 
@@ -18,4 +18,4 @@ FROM default AS development
 
 COPY .env .env
 
-CMD yarn run start:dev
+CMD npm run start:dev

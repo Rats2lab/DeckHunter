@@ -1,11 +1,5 @@
 ## Requisitos
 
-# Gestor de paquetes
-
-```bash
-$ npm install -g yarn
-```
-
 # Preparación del entorno
 
 ```bash
@@ -15,20 +9,19 @@ $ cp .env.example .env
 Se requiere añadir valor a todas las variables contenidas en estos dos ficheros.
 
 ```bash
-$ yarn install
-$ yarn build
+$ npm i
 ```
 
 ## Start entorno local
 
 ```bash
-$ yarn docker:up
+$ npm run docker:up
 ```
 
 ## Stop entorno local
 
 ```bash
-$ yarn docker:dev:down
+$ npm run docker:dev:down
 ```
 
 ## Ejecución de tests
@@ -36,25 +29,25 @@ $ yarn docker:dev:down
 # Unitarios
 
 ```bash
-$ yarn docker:test
+$ npm run docker:test
 ```
 
 # End to end
 
 ```bash
-$ yarn docker:test:e2e
+$ npm run docker:test:e2e
 ```
 
 # Externos
 
 ```bash
-$ yarn docker:test:out
+$ npm run docker:test:out
 ```
 
 # Coverage
 
 ```bash
-$ yarn docker:test:cov
+$ npm run docker:test:cov
 ```
 
 ## Migraciones
@@ -62,17 +55,17 @@ $ yarn docker:test:cov
 # Crear nueva
 
 ```bash
-$ yarn migration:create MigrationName
+$ npm run migration:create MigrationName
 ```
 
 # Pendientes
 
 ```bash
-$ yarn migration:pending
+$ npm run migration:pending
 ```
 
 # Listado
 
 ```bash
-$ yarn migration:list
+$ npm run migration:list
 ```
