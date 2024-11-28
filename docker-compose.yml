@@ -10,9 +10,9 @@ services:
     hostname: ollama
     image: ollama/ollama:latest
     ports:
-      - ${OLLAMA_PORT:-11434}:11434
+      - ${DH_OLLAMA_PORT:-11434}:11434
     environment:
-      OLLAMA_PORT: ${OLLAMA_PORT}
+      OLLAMA_PORT: ${DH_OLLAMA_PORT}
     restart: unless-stopped
 
   database:
@@ -20,21 +20,19 @@ services:
     container_name: deck-hunter-db
     hostname: deck-hunter-db
     ports:
-      - 5432:${DB_PORT}
+      - 5432:${DH_DB_PORT}
     volumes:
       - .pgdata:/var/lib/postgresql/data
     environment:
-      NODE_ENV: ${NODE_ENV}
-      DB_PORT: ${DB_PORT}
-      POSTGRES_USER: ${DB_USER}
-      POSTGRES_PASSWORD: ${DB_PASS}
-      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DH_DB_USER}
+      POSTGRES_PASSWORD: ${DH_DB_PASS}
+      POSTGRES_DB: ${DH_DB_NAME}
       PGDATA: /var/lib/postgresql/data/pgdata
       TZ: Europe/Madrid
       PGTZ: Europe/Madrid
     restart: unless-stopped
     networks:
-      - ${NODE_ENV}
+      - ${DH_NODE_ENV}
     tty: true
 
   backend:
@@ -42,9 +40,9 @@ services:
     hostname: deck-hunter-be
     build:
       context: .
-      target: ${NODE_ENV}
+      target: ${DH_NODE_ENV}
     ports:
-      - ${APP_PORT:-3000}:3000
+      - ${DH_APP_PORT:-3000}:3000
     volumes:
       - ./src:/usr/src/app/src
       - ./test:/usr/src/app/test
@@ -55,11 +53,9 @@ services:
       - ./tsconfig.build.json:/usr/src/app/tsconfig.build.json:ro
       - ./tsconfig.json:/usr/src/app/tsconfig.json:ro
     environment:
-      NODE_ENV: ${NODE_ENV}
-      APP_PORT: ${APP_PORT}
-      MIKRO_ORM_CLI: ${MIKRO_ORM_CLI}
-      MIKRO_ORM_CLI_USE_TS_NODE: ${MIKRO_ORM_CLI_USE_TS_NODE}
+      DH_NODE_ENV: ${DH_NODE_ENV}
+      APP_PORT: ${DH_APP_PORT}
     restart: unless-stopped
     networks:
-      - ${NODE_ENV}
+      - ${DH_NODE_ENV}
     tty: true

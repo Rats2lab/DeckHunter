@@ -58,8 +58,12 @@ export class ProductSeedService {
 
     await this.telegramBotSendAllNewProductsService.sendAllNewProducts(
       {
-        chatId: this.configService.getOrThrow<number>('TELEGRAM_BOT_CHAT_ID'),
-        botToken: this.configService.getOrThrow<string>('TELEGRAM_BOT_TOKEN'),
+        chatId: this.configService.getOrThrow<number>(
+          'DH_TELEGRAM_BOT_CHAT_ID',
+        ),
+        botToken: this.configService.getOrThrow<string>(
+          'DH_TELEGRAM_BOT_TOKEN',
+        ),
       },
       createdProducts,
       productSeedParams.leaderboardDate,

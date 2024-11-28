@@ -14,7 +14,7 @@ export class OpenAiRepository {
 
   constructor(private readonly configService: ConfigService) {
     this.openAiClient = new OpenAI({
-      apiKey: this.configService.getOrThrow<string>('OPEN_AI_APIKEY'),
+      apiKey: this.configService.getOrThrow<string>('DH_OPEN_AI_APIKEY'),
     });
   }
 

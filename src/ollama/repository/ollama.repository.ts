@@ -10,7 +10,7 @@ export class OllamaRepository {
 
   constructor(private readonly configService: ConfigService) {
     this.ollamaClient = new Ollama({
-      host: this.configService.getOrThrow<string>('OLLAMA_HOST'),
+      host: this.configService.getOrThrow<string>('DH_OLLAMA_HOST'),
     });
   }
 

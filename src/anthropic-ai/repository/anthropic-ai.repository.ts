@@ -15,7 +15,7 @@ export class AnthropicAiRepository {
 
   constructor(private readonly configService: ConfigService) {
     this.anthropicAiClient = new Anthropic({
-      apiKey: this.configService.getOrThrow<string>('ANTHROPIC_AI_APIKEY'),
+      apiKey: this.configService.getOrThrow<string>('DH_ANTHROPIC_AI_APIKEY'),
     });
   }
 
