@@ -10,9 +10,9 @@ services:
     hostname: ollama
     image: ollama/ollama:latest
     ports:
-      - ${DH_OLLAMA_PORT:-11434}:11434
+      - ${DH_OLLAMA_PORT}:11434
     environment:
-      OLLAMA_PORT: ${DH_OLLAMA_PORT}
+      DH_OLLAMA_PORT: ${DH_OLLAMA_PORT}
     restart: unless-stopped
 
   database:
@@ -20,13 +20,14 @@ services:
     container_name: deck-hunter-db
     hostname: deck-hunter-db
     ports:
-      - 5432:${DH_DB_PORT}
+      - ${DH_DB_PORT}:${DH_DB_PORT}
     volumes:
       - .pgdata:/var/lib/postgresql/data
     environment:
       POSTGRES_USER: ${DH_DB_USER}
       POSTGRES_PASSWORD: ${DH_DB_PASS}
       POSTGRES_DB: ${DH_DB_NAME}
+      PGPORT: ${DH_DB_PORT}
       PGDATA: /var/lib/postgresql/data/pgdata
       TZ: Europe/Madrid
       PGTZ: Europe/Madrid
@@ -42,7 +43,7 @@ services:
       context: .
       target: ${DH_NODE_ENV}
     ports:
-      - ${DH_APP_PORT:-3000}:3000
+      - ${DH_APP_PORT}:${DH_APP_PORT}
     volumes:
       - ./src:/usr/src/app/src
       - ./test:/usr/src/app/test
@@ -54,7 +55,7 @@ services:
       - ./tsconfig.json:/usr/src/app/tsconfig.json:ro
     environment:
       DH_NODE_ENV: ${DH_NODE_ENV}
-      APP_PORT: ${DH_APP_PORT}
+      DH_APP_PORT: ${DH_APP_PORT}
     restart: unless-stopped
     networks:
       - ${DH_NODE_ENV}

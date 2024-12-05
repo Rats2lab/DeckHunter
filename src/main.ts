@@ -2,6 +2,7 @@ import { INestApplication, VersioningType } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, OpenAPIObject, SwaggerModule } from '@nestjs/swagger';
 import { AppNestjsModule } from './app/app.nestjs.module';
+import { ConfigService } from '@nestjs/config';
 
 async function bootstrap() {
   const app: INestApplication<any> = await NestFactory.create(AppNestjsModule, {
@@ -14,7 +15,7 @@ async function bootstrap() {
 
   configureSwagger(app);
 
-  await app.listen(3000);
+  await app.listen(app.get(ConfigService).getOrThrow('DH_APP_PORT'));
 }
 bootstrap();
 
