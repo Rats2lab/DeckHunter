@@ -21,8 +21,8 @@ export class ProductAttributeMikroOrm implements ProductAttribute {
   id: string;
 
   @ManyToOne(() => ProductMikroOrm, {
-    onDelete: 'RESTRICT',
-    onUpdateIntegrity: 'RESTRICT',
+    deleteRule: 'RESTRICT',
+    updateRule: 'RESTRICT',
     nullable: false,
     joinColumn: 'product_id',
     mapToPk: true,

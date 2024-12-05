@@ -1,7 +1,8 @@
 import { MikroOrmModuleSyncOptions } from '@mikro-orm/nestjs';
+import { PostgreSqlDriver } from '@mikro-orm/postgresql';
 
 export const mikroOrmConfig = async (): Promise<MikroOrmModuleSyncOptions> => ({
-  type: 'postgresql',
+  driver: PostgreSqlDriver,
   host: process.env.DH_DB_HOST,
   port: +process.env.DH_DB_PORT,
   user: process.env.DH_DB_USER,

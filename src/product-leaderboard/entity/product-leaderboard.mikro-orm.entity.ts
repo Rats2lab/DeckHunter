@@ -17,8 +17,8 @@ export class ProductLeaderboardMikroOrm implements ProductLeaderboard {
   id: string;
 
   @ManyToOne(() => ProductMikroOrm, {
-    onDelete: 'RESTRICT',
-    onUpdateIntegrity: 'RESTRICT',
+    deleteRule: 'RESTRICT',
+    updateRule: 'RESTRICT',
     nullable: false,
     joinColumn: 'product_id',
     mapToPk: true,
@@ -27,8 +27,8 @@ export class ProductLeaderboardMikroOrm implements ProductLeaderboard {
   productId: string;
 
   @ManyToOne(() => LeaderboardMikroOrm, {
-    onDelete: 'RESTRICT',
-    onUpdateIntegrity: 'RESTRICT',
+    deleteRule: 'RESTRICT',
+    updateRule: 'RESTRICT',
     nullable: false,
     joinColumn: 'leaderboard_id',
     mapToPk: true,
