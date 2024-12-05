@@ -1,5 +1,5 @@
 import { MikroORM } from '@mikro-orm/core';
-import { MikroOrmModule } from '@mikro-orm/nestjs';
+import { InjectMikroORM, MikroOrmModule } from '@mikro-orm/nestjs';
 import { Module, OnModuleInit, ValidationPipe } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { APP_PIPE } from '@nestjs/core';
@@ -15,6 +15,7 @@ import { OpenAiNestjsModule } from '../open-ai/open-ai.nestjs.module';
 import { AnthropicAiNestjsModule } from '../anthropic-ai/anthropic-ai.nestjs.module';
 import { ProductAttributeNestjsModule } from '../product-attribute/product-attribute.nestjs.module';
 import { OllamaNestjsModule } from '../ollama/ollama.nestjs.module';
+import { DATABASE_CONTEXT_NAME } from '../database/constant/database.constant';
 
 @Module({
   imports: [
@@ -22,8 +23,10 @@ import { OllamaNestjsModule } from '../ollama/ollama.nestjs.module';
       isGlobal: true,
     }),
     MikroOrmModule.forRootAsync({
+      contextName: DATABASE_CONTEXT_NAME,
       useFactory: mikroOrmConfig,
     }),
+    MikroOrmModule.forMiddleware(),
     LeaderboardNestjsModule,
     ProductNestjsModule,
     ProductLeaderboardNestjsModule,
@@ -50,7 +53,9 @@ import { OllamaNestjsModule } from '../ollama/ollama.nestjs.module';
   ],
 })
 export class AppNestjsModule implements OnModuleInit {
-  constructor(private readonly orm: MikroORM) {}
+  constructor(
+    @InjectMikroORM(DATABASE_CONTEXT_NAME) private readonly orm: MikroORM,
+  ) {}
 
   async onModuleInit() {
     await this.orm.getMigrator().up();

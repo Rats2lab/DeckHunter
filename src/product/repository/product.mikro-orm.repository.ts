@@ -3,21 +3,25 @@ import {
   EntityComparator,
   MikroORM,
 } from '@mikro-orm/core';
+import { InjectMikroORM } from '@mikro-orm/nestjs';
 import { Injectable } from '@nestjs/common';
 import { DateTime } from 'luxon';
 import { v4 } from 'uuid';
+import { DATABASE_CONTEXT_NAME } from '../../database/constant/database.constant';
 import { ProductMikroOrm } from '../entity/product.mikro-orm.entity';
+import { Product } from '../interface/product.interface';
 import { ProductWithRelations } from '../interface/product.with-relations.interface';
 import { ProductCreate } from '../type/product.create.type';
+import { ProductFindFilters } from '../type/product.find-filters.type';
 import { ProductFindOneFilters } from '../type/product.find-one-filters.type';
 import { ProductUpdateFields } from '../type/product.update-fields.type';
 import { ProductUpdateFilters } from '../type/product.update-filters.type';
-import { Product } from '../interface/product.interface';
-import { ProductFindFilters } from '../type/product.find-filters.type';
 
 @Injectable()
 export class ProductMikroOrmRepository {
-  constructor(private readonly orm: MikroORM) {}
+  constructor(
+    @InjectMikroORM(DATABASE_CONTEXT_NAME) private readonly orm: MikroORM,
+  ) {}
 
   @CreateRequestContext()
   async findOne(

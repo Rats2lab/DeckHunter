@@ -1,15 +1,19 @@
 import { CreateRequestContext, MikroORM } from '@mikro-orm/core';
+import { InjectMikroORM } from '@mikro-orm/nestjs';
 import { Injectable } from '@nestjs/common';
 import { DateTime } from 'luxon';
 import { v4 } from 'uuid';
+import { DATABASE_CONTEXT_NAME } from '../../database/constant/database.constant';
 import { ProductAttributeMikroOrm } from '../entity/product-attribute.mikro-orm.entity';
 import { ProductAttribute } from '../interface/product-attribute.interface';
-import { ProductAttributeCreate } from '../type/product-attribute.create.type';
 import { ProductAttributeCountFilter } from '../type/product-attribute.count-filter.type';
+import { ProductAttributeCreate } from '../type/product-attribute.create.type';
 
 @Injectable()
 export class ProductAttributeMikroOrmRepository {
-  constructor(private readonly orm: MikroORM) {}
+  constructor(
+    @InjectMikroORM(DATABASE_CONTEXT_NAME) private readonly orm: MikroORM,
+  ) {}
 
   @CreateRequestContext()
   async insert(

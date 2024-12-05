@@ -3,20 +3,24 @@ import {
   EntityComparator,
   MikroORM,
 } from '@mikro-orm/core';
+import { InjectMikroORM } from '@mikro-orm/nestjs';
 import { Injectable } from '@nestjs/common';
 import { DateTime } from 'luxon';
 import { v4 } from 'uuid';
+import { DATABASE_CONTEXT_NAME } from '../../database/constant/database.constant';
 import { LeaderboardMikroOrm } from '../entity/leaderboard.mikro-orm.entity';
 import { Leaderboard } from '../interface/leaderboard.interface';
 import { LeaderboardCreate } from '../type/leaderboard.create.type';
 import { LeaderboardFindFilters } from '../type/leaderboard.find-filters.type';
+import { LeaderboardFindOneFilters } from '../type/leaderboard.find-one-filters.type';
 import { LeaderboardUpdateFields } from '../type/leaderboard.update-fields.type';
 import { LeaderboardUpdateFilters } from '../type/leaderboard.update-filters.type';
-import { LeaderboardFindOneFilters } from '../type/leaderboard.find-one-filters.type';
 
 @Injectable()
 export class LeaderboardMikroOrmRepository {
-  constructor(private readonly orm: MikroORM) {}
+  constructor(
+    @InjectMikroORM(DATABASE_CONTEXT_NAME) private readonly orm: MikroORM,
+  ) {}
 
   @CreateRequestContext()
   async findOne(

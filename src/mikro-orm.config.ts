@@ -3,6 +3,7 @@ import { PostgreSqlDriver } from '@mikro-orm/postgresql';
 
 export const mikroOrmConfig = async (): Promise<MikroOrmModuleSyncOptions> => ({
   driver: PostgreSqlDriver,
+  registerRequestContext: false,
   host: process.env.DH_DB_HOST,
   port: +process.env.DH_DB_PORT,
   user: process.env.DH_DB_USER,

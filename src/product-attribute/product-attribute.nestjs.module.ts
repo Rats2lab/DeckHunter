@@ -1,5 +1,6 @@
 import { MikroOrmModule } from '@mikro-orm/nestjs';
 import { Module } from '@nestjs/common';
+import { DATABASE_CONTEXT_NAME } from '../database/constant/database.constant';
 import { OllamaNestjsModule } from '../ollama/ollama.nestjs.module';
 import { ProductAttributeMikroOrm } from './entity/product-attribute.mikro-orm.entity';
 import { ProductAttributeMikroOrmRepository } from './repository/product-attribute.mikro-orm.repository';
@@ -11,7 +12,10 @@ import { ProductAttributeCreateService } from './service/product-attribute.creat
 
 @Module({
   imports: [
-    MikroOrmModule.forFeature([ProductAttributeMikroOrm]),
+    MikroOrmModule.forFeature(
+      [ProductAttributeMikroOrm],
+      DATABASE_CONTEXT_NAME,
+    ),
     OllamaNestjsModule,
   ],
   providers: [

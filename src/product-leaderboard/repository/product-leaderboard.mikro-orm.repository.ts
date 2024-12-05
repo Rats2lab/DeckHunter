@@ -1,11 +1,9 @@
-import {
-  CreateRequestContext,
-  EntityComparator,
-  MikroORM,
-} from '@mikro-orm/core';
+import { CreateRequestContext, MikroORM } from '@mikro-orm/core';
+import { InjectMikroORM } from '@mikro-orm/nestjs';
 import { Injectable } from '@nestjs/common';
 import { DateTime } from 'luxon';
 import { v4 } from 'uuid';
+import { DATABASE_CONTEXT_NAME } from '../../database/constant/database.constant';
 import { ProductLeaderboardMikroOrm } from '../entity/product-leaderboard.mikro-orm.entity';
 import { ProductLeaderboard } from '../interface/product-leaderboard.interface';
 import { ProductLeaderboardCreate } from '../type/product-leaderboard.create.type';
@@ -13,7 +11,9 @@ import { ProductLeaderboardFindOneFilters } from '../type/product-leaderboard.fi
 
 @Injectable()
 export class ProductLeaderboardMikroOrmRepository {
-  constructor(private readonly orm: MikroORM) {}
+  constructor(
+    @InjectMikroORM(DATABASE_CONTEXT_NAME) private readonly orm: MikroORM,
+  ) {}
 
   @CreateRequestContext()
   async findOne(
